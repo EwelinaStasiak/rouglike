@@ -3,7 +3,7 @@ from termcolor import colored
 
 def load_board(path):
     board = []
-    f = open(path + "board_2.txt", "r")
+    f = open(path + "Board_cars.txt", "r")
     
     init_board = f.readlines()
     
