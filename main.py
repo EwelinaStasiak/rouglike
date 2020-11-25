@@ -52,7 +52,7 @@ def main():
         if key == 'q':
             is_running = False
         else:
-            movement.player_move(key, board, PLAYER_ICON)
+            movement.player_move(board, PLAYER_ICON, key)
             print(board)
 
         util.clear_screen()
