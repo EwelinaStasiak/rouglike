@@ -3,9 +3,15 @@ from termcolor import colored
 
 def load_board(path):
     board = []
-    f = open(path + "Board_cars.txt", "r")
+
+    file_1 = "board_2.txt"
+    file_2 = "Board_cars.txt"
+
+    f = open(path + file_1, "r")
     
     init_board = f.readlines()
+
+    f.close()
     
     for line in init_board:
         board.append(list(line))
