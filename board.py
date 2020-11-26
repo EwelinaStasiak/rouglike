@@ -7,7 +7,7 @@ def load_board(path):
     file_1 = "board_2.txt"
     file_2 = "Board_cars.txt"
 
-    f = open(path + file_1, "r")
+    f = open("‪board_2.txt", "r")
     
     init_board = f.readlines()
 
