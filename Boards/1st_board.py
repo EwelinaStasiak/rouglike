@@ -53,15 +53,6 @@ def placing_chembers():
         random_col_2 = random.randint(chemb_1_width, board_width - chemb_3_width)
 
 
-#     return board, random_row_1, random_row_2, random_col_1, random_col_2
-
-# def placing_chembers():
-#     board, random_row_1, random_row_2, random_col_1, random_col_2 = random_variables(hights_and_widths)
-#     first_row_col = 0
-#     chember_1_dimensions = hights_and_widths[1]
-#     chember_2_dimensions = hights_and_widths[2]
-#     chember_3_dimensions = hights_and_widths[3]
-
     for row_num in range(len(chember_1)):
         board[random_row_1][first_row_col : chemb_1_width] = chember_1[row_num]
         random_row_1 += 1
