@@ -1,16 +1,14 @@
-def create_board(width, height):
-    '''
-    Creates a new game board based on input parameters.
+def create_board(width, hight, space = " ", vert_boarder = " ", horis_boarder = " "):
+    board = []
+    first_last_row = [0, hight - 1]
 
-    Args:
-    int: The width of the board
-    int: The height of the board
-
-    Returns:
-    list: Game board
-    '''
-    pass
-
+    for num in range(hight):
+        if num in first_last_row:
+            board.append([horis_boarder] * width)
+        else:
+            board.append([vert_boarder] + [space] * (width - 2) + [vert_boarder])
+    
+    return board
 
 def put_player_on_board(board, player):
     '''
