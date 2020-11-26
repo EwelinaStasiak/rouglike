@@ -81,5 +81,9 @@ def print_a_board(board):
             print(el, end = "")
         print()
 
-board = placing_chembers()
-print_a_board(board)
+def main():
+    board = placing_chembers()
+    print_a_board(board)
+
+if __name__ == "__main__":
+    main()

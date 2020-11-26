@@ -53,4 +53,5 @@ def main():
     board = car_placement(board)
     print_a_board(board)
 
-main()
+if __name__ == "__main__":
+    main()
