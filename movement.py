@@ -1,4 +1,5 @@
 import random
+import fight
 
 def character_position(character_icon, board):
     for row in range(len(board)):
@@ -24,47 +25,53 @@ def direction_of_movement(key, character_coordinate):
         return [row, col]
 
 
-def player_move(board, player_icon, key):
-
+def player_move(board, player_icon, key, list_of_creatures): #Parametr z lokacją wrogów
+    enemy_icon = ["W"]
     player_coordinate = character_position(player_icon, board)
     next_player_coordinate = direction_of_movement(key, player_coordinate)
 
     if board[next_player_coordinate[0]][next_player_coordinate[1]] == " " or board[next_player_coordinate[0]][next_player_coordinate[1]] == player_icon:
         board[player_coordinate[0]][player_coordinate[1]] = " "
         board[next_player_coordinate[0]][next_player_coordinate[1]] = player_icon
-    return board
+    elif board[next_player_coordinate[0]][next_player_coordinate[1]] in enemy_icon: # pętla na wypadek natrafienia na wroga
+        board, list_of_creatures = fight.fight(board, list_of_creatures, (next_player_coordinate[0], next_player_coordinate[1]))
+    return board, list_of_creatures
 
-def creature_movement(board, creatures_location):
+def creature_movement(board, list_of_creatures, enemy_icon):
     keybord_keys = ["W", "S", "A", "D"]
     floor = " "
-    new_locations = []
+    #new_locations = []
 
-    for index in creatures_location:
+    for creature in list_of_creatures:
         random_key = random.choice(keybord_keys)
-        row, col = index
+        row, col = creature["location"]
 
-        new_row, new_col = direction_of_movement(random_key, index)
+        new_row, new_col = direction_of_movement(random_key, creature["location"])
 
         if board[new_row][new_col] == floor:
             board[new_row][new_col] = board[row][col]
             board[row][col] = floor
-            new_locations.append((new_row, new_col))
+            creature["location"] = (new_row, new_col)
+        elif board[new_row][new_col] in enemy_icon:
+            creature["location"] = (new_row, new_col)
+            board, list_of_creatures = fight.fight(board, list_of_creatures, (new_row, new_col))
         else:
-            new_locations.append((row, col))
+           creature["location"] = (row, col)
     
-    return board, new_locations
+    return board, list_of_creatures
 
-def fight(character_1, character_2_health, min_damage = 1, max_damage = 2):
-    if not did_I_miss():
-        damage = random.randint(min_damage, max_damage)
-        character_2_health -= damage
+# def fight(character_1, character_2_health, min_damage = 1, max_damage = 2):
+#     did_I_miss = random.choice([True, False])
+#     if not did_I_miss():
+#         damage = random.randint(min_damage, max_damage)
+#         character_2_health -= damage
+    
+#     return character_2_health
 
-def did_I_miss():
-    values = [True, False]
-
-    return random.choice(values)
-
-def did_it_die():
-    pass
+# def did_it_die(character_health):
+#     if character_health <= 0:
+#         return True
+#     else:
+#         return False
 
 

@@ -98,11 +98,13 @@ def print_inventory(inventory):# if user press "I"
 
 def main(board):
     hero, inventory = create_player("1")
-    apple,wormy_apple,egg,cone,stick,key,worm,hen = create_items()
-    enemy_icons = creatures.enemy_pics()
+    apple,wormy_apple,egg,cone,stick,key = create_items() #,worm,hen
+    worm, car, lory, dog, hen = creatures.creatures()
+    icons = creatures.enemy_pics() + [hero["picture"]]
+    list_of_creatures = creatures.creatures_on_the_board_dicts(worm)
     board_indices = gen_boards.board_indexes(board)
+    board, list_of_creatures = creatures.random_creatures_locations(board, board_indices, list_of_creatures)
     
-    board, creatures_location = creatures.random_creatures_locations(board, board_indices, worm["picture"], worm["num_to_place"])
 
     #board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
     print(board)
@@ -119,15 +121,22 @@ def main(board):
         if key == 'q':
             is_running = False
         else:
-            board = movement.player_move(board, PLAYER_ICON, key)
-            board, creatures_location = movement.creature_movement(board, creatures_location)
+            board, list_of_creatures = movement.player_move(board, PLAYER_ICON, key, list_of_creatures)
+            board, list_of_creatures = movement.creature_movement(board, list_of_creatures, icons)
             ui.display_board(board)
+
             #print(board)
 
         util.clear_screen()
         ui.display_board(board)
         #print(board)
-
+        for el in list_of_creatures:
+            print(el["health"])
+        # print(list_of_creatures[0]["health"])
+        # print(list_of_creatures[1]["health"])
+        # print(list_of_creatures[2]["health"])
+        # print(list_of_creatures[3]["health"])
+        # print(list_of_creatures[4]["health"])
 
 if __name__ == '__main__':
     main(board)
