@@ -37,6 +37,26 @@ def random_creatures_locations(board, board_indexes, list_of_creatures):
 
     return board, list_of_creatures
 
+def car_placement(board, board_indices, list_of_vehiculs):
+    vehiculs_to_place = len(list_of_vehiculs)
+    possible_rows = [15, 16, 17, 19, 20, 21]
+    min_col = 1
+    max_col = 78
+
+    while vehiculs_to_place > 0:
+        row_index = random.choice(possible_rows)
+        col_index = random.randint(min_col, max_col)
+        
+        if board[row_index][col_index] == " " and board[row_index][col_index + 2] == " ":
+            vehicul = list_of_vehiculs[vehiculs_to_place - 1]
+            if vehicul["name"] == "Lorry":
+                board[row_index][col_index : col_index + 2] = [vehicul["pic"]] * 2
+            else:
+                board[row_index][col_index] = vehicul["pic"]
+            vehiculs_to_place -= 1
+    
+    return board
+
 # def random_creatures_locations(board, board_indexes, list_of_creatures):
 #     floor = " "
 #     creatures_locations = []
