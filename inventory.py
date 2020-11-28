@@ -1,7 +1,6 @@
 def create_inventory():
-    inventory = {}
+    inventory = {"start":0}
     return inventory
-
 
 def add_to_inventory(inventory, added_items):
     for elements in added_items:
@@ -32,3 +31,4 @@ def print_inventory(inventory):# if user press "I"
     for key,value in inventory.items():
         print("{:>12} | {:<5}".format(key,value))
     print(20*"-")
+
