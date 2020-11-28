@@ -63,13 +63,13 @@ def getting_off_the_portal(board, portal_indices, possible_coordinates):
     next_indices = ()
     row, col = portal_indices
     
-    if (row + 1, col) in possible_coordinates and board[row + 1][col] == " ":
+    if (row + 1, col) in possible_coordinates and board[row + 1][col] != "#":
         return (row + 1, col)
-    elif (row - 1, col) in possible_coordinates and board[row - 1][col] == " ":
+    elif (row - 1, col) in possible_coordinates and board[row - 1][col] != "#":
         return (row - 1, col)
-    elif (row, col + 1) in possible_coordinates and board[row][col + 1] == " ":
+    elif (row, col + 1) in possible_coordinates and board[row][col + 1] != "#":
         return (row, col + 1)
-    elif (row, col - 1) in possible_coordinates and board[row][col + 1] == " ":
+    elif (row, col - 1) in possible_coordinates and board[row][col - 1] != "#":
         return (row, col - 1)
 
 def creature_movement(board, list_of_creatures, enemy_icon):

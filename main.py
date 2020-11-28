@@ -44,10 +44,10 @@ def main():
             util.clear_screen()
         if key == "i":
             inventory.print_inventory(inventory_hero)#czy zatrzymać na kilka sekund ?
-        board_1, list_of_creatures = movement.player_move(board_1, PLAYER_ICON, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
-        board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
-        ui.display_board(board_1)
-        util.clear_screen()
+            board_1, list_of_creatures = movement.player_move(board_1, PLAYER_ICON, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
+            board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
+            ui.display_board(board_1)
+            util.clear_screen()
 
 if __name__ == '__main__':
     main()
