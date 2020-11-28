@@ -1,14 +1,15 @@
 import random
 import fight
 import interaction
+import termcolor
 
 def character_position(character_icon, board):
     for row in range(len(board)):
         for col in range(len(board[row])):
-            if board[row][col] == character_icon:
+            if board[row][col] == character_icon: 
                 character_coordinate = [row, col]
-    return character_coordinate
 
+    return character_coordinate
 
 def direction_of_movement(key, character_coordinate):
     row = character_coordinate[0]
@@ -25,20 +26,28 @@ def direction_of_movement(key, character_coordinate):
     else:
         return [row, col]
 
-
-def player_move(board, player, key, list_of_creatures, inventory, list_of_items): #Parametr z lokacją wrogów
+def player_move(board, player, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
     enemy_icon = ["W"]
-    player_icon = player.get("picture")
+    player_icon = "@" #player.get("picture")
     elements_without_interaction = [" ", "#"]
+    portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
 
     player_coordinate = character_position(player_icon, board)
 
     next_player_coordinate = direction_of_movement(key, player_coordinate)
+    #next_row = next_player_coordinate[0] # Moze to tak skrócić, by było bardziej czytelne?
+    #next_col = next_player_coordinate[1]
     next_position = board[next_player_coordinate[0]][next_player_coordinate[1]]
     
     if next_position == " " or next_position == player_icon:    # next_position == player_icon zabezpieczenie jak wciśnie się coś innego niż W, S, A, D. Player zostaje w tym samym miejscu 
         board[player_coordinate[0]][player_coordinate[1]] = " "
         board[next_player_coordinate[0]][next_player_coordinate[1]] = player_icon
+    
+    elif (next_player_coordinate[0], next_player_coordinate[1]) in portals_dict:
+        board[player_coordinate[0]][player_coordinate[1]] = " "
+        portal_indices = portals_dict[(next_player_coordinate[0], next_player_coordinate[1])]
+        next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
+        board[next_row][next_col] = player_icon
 
     elif next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
         board, list_of_creatures = fight.fight(board, list_of_creatures, (next_player_coordinate[0], next_player_coordinate[1]))
@@ -49,6 +58,19 @@ def player_move(board, player, key, list_of_creatures, inventory, list_of_items)
                 board = interaction.player_interaction(player, inventory, board, item, next_player_coordinate, player_coordinate)
                 break
     return board, list_of_creatures
+
+def getting_off_the_portal(board, portal_indices, possible_coordinates):
+    next_indices = ()
+    row, col = portal_indices
+    
+    if (row + 1, col) in possible_coordinates and board[row + 1][col] == " ":
+        return (row + 1, col)
+    elif (row - 1, col) in possible_coordinates and board[row - 1][col] == " ":
+        return (row - 1, col)
+    elif (row, col + 1) in possible_coordinates and board[row][col + 1] == " ":
+        return (row, col + 1)
+    elif (row, col - 1) in possible_coordinates and board[row][col + 1] == " ":
+        return (row, col - 1)
 
 def creature_movement(board, list_of_creatures, enemy_icon):
     keybord_keys = ["W", "S", "A", "D"]

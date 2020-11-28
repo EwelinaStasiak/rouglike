@@ -59,13 +59,36 @@ def placing_chembers():
     chember_1, chember_2, chember_3 = chembers
     row_1, col_1, row_2, col_2 = random_chembers_indices(board_hight, board_width, first_row_col, hight_and_width)
 
-    board, available_coordinates = placing_1st_chember(board, chember_1, row_1, available_coordinates, hight_and_width[1])
-    board, available_coordinates = placing_2nd_chember(board, chember_2, col_1, available_coordinates, hight_and_width[2])
-    board, available_coordinates = placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, hight_and_width[3])
+    board, yellow1_green1_portals, available_coordinates = placing_1st_chember(board, chember_1, row_1, available_coordinates, hight_and_width[1])
+    board, blue1_yellow_2_portals, available_coordinates = placing_2nd_chember(board, chember_2, col_1, available_coordinates, hight_and_width[2])
+    board, green2_blue_2_portals, available_coordinates = placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, hight_and_width[3])
+
+    portals_dict = gen_portals_dict(yellow1_green1_portals + blue1_yellow_2_portals + green2_blue_2_portals)
+
+    return board, available_coordinates, portals_dict
+
+def gen_portals_dict(portals):
+    portals_dict = {}
+
+    for n in range(len(portals)//2):
+        portals_dict[portals[n]] = portals[n+3]
+        portals_dict[portals[n+3]] = portals[n]
+    
+    return portals_dict
+    
+    # green_1 = 1
+    # green_2 = 4
+    # yellow_1 = 0
+    # yellow_2 =3
+    # blue_1 = 2
+    # blue_2 = 5
 
 
+    # yellow_1, green_1 = green1_yellow1
+    # blue_1, yellow_2 = blue1_yellow_2
+    # green_2, blue_2 = green2_blue_2
+    # portals_dict = {}
 
-    return board, available_coordinates
 
 def placing_1st_chember(board, chember_1, row_1, available_coordinates, dimensions):
     row_for_portal = row_1
@@ -77,9 +100,9 @@ def placing_1st_chember(board, chember_1, row_1, available_coordinates, dimensio
             n += 1
         row_1 += 1
     
-    board = portals.chember_1_portals(board, dimensions, row_for_portal)
+    board, portal_indices = portals.chember_1_portals(board, dimensions, row_for_portal)
 
-    return board, available_coordinates
+    return board, portal_indices, available_coordinates
 
 def placing_2nd_chember(board, chember_2, col_1, available_coordinates, dimensions):
     col_for_portal = col_1
@@ -92,9 +115,9 @@ def placing_2nd_chember(board, chember_2, col_1, available_coordinates, dimensio
             r_col += 1
             n += 1
     
-    board = portals.chember_2_portals(board, dimensions, col_for_portal)
+    board, portal_indices = portals.chember_2_portals(board, dimensions, col_for_portal)
     
-    return board, available_coordinates
+    return board, portal_indices, available_coordinates
 
 def placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, dimensions) :
     row_for_portal = row_2
@@ -108,9 +131,9 @@ def placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, d
             col += 1
         row_2 += 1
 
-    board = portals.chember_3_portals(board, dimensions, row_for_portal, col_for_portal)
+    board, portal_indices = portals.chember_3_portals(board, dimensions, row_for_portal, col_for_portal)
 
-    return board, available_coordinates
+    return board, portal_indices, available_coordinates
 
 # def placing_chembers():
 #     board_hight = 31
