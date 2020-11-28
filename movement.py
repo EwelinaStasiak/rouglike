@@ -3,7 +3,7 @@ import fight
 
 def character_position(character_icon, board):
     for row in range(len(board)):
-        for col in range(len(board)):
+        for col in range(len(board[row])):
             if board[row][col] == character_icon:
                 character_coordinate = [row, col]
     return character_coordinate
@@ -30,7 +30,7 @@ def player_move(board, player_icon, key, list_of_creatures): #Parametr z lokacjÄ
     player_coordinate = character_position(player_icon, board)
     next_player_coordinate = direction_of_movement(key, player_coordinate)
 
-    if board[next_player_coordinate[0]][next_player_coordinate[1]] == " " or board[next_player_coordinate[0]][next_player_coordinate[1]] == player_icon:
+    if board[next_player_coordinate[0]][next_player_coordinate[1]] == " ":
         board[player_coordinate[0]][player_coordinate[1]] = " "
         board[next_player_coordinate[0]][next_player_coordinate[1]] = player_icon
     elif board[next_player_coordinate[0]][next_player_coordinate[1]] in enemy_icon: # pÄ™tla na wypadek natrafienia na wroga
