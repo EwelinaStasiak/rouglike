@@ -80,29 +80,30 @@ def enemy_pics():
     
     return enemy_pics
 
-def main():
-    board_list = [["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", "@", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]]
+# def main():
+#     board_list = [["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", "@", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
+#     ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]]
     
-    #worm_1, worm_2, worm_3, worm_4, worm_5 = list_of_creatures
+#     #worm_1, worm_2, worm_3, worm_4, worm_5 = list_of_creatures
     
-    board_index = gen_boards.board_indexes(board_list)
-    worm, car, lory, dog, hen = creatures()
-    list_of_creatures = creatures_on_the_board_dicts(worm)
-    board, list_of_creatures = random_creatures_locations(board_list, board_index, list_of_creatures)
-    ui.display_board(board_list)
+#     board_index = gen_boards.board_indexes(board_list)
+#     worm, car, lory, dog, hen = creatures()
+#     list_of_creatures = creatures_on_the_board_dicts(worm)
+#     board, list_of_creatures = random_creatures_locations(board_list, board_index, list_of_creatures)
+#     ui.display_board(board_list)
 
 
 if __name__ == "__main__":
-    main()
+    pass
+    #main()
 
 
 
