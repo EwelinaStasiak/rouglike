@@ -14,3 +14,17 @@ def eat_food(hero, food): #Tutaj brakowało parabetru hero?
         pass
     else :
         hero["health"] += food.get("value_health",0)
+
+def random_items_locations(board, board_indexes, list_of_creatures):
+    floor = " "
+
+    for i in range (5)
+        value = False
+        while value is False:
+            row_index, col_index = random.choice(board_indexes)
+            if board[row_index][col_index] == floor:
+                board[row_index][col_index] = creature["pic"]
+                creature["location"] = (row_index, col_index)
+                value = True
+
+    return board, list_of_creatures
