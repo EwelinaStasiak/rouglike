@@ -1,11 +1,10 @@
 import util
-import engine
 import ui
 import movement
 import creatures
-import gen_boards
 import player
 import first_board
+import items
 
 
 def main():
@@ -17,6 +16,7 @@ def main():
     worm, car, lory, dog, hen = creatures.creatures()
     ui.display_board(board_1)
     list_of_creatures = creatures.creatures_on_the_board_dicts(worm)
+    list_of_items = list(items.create_items())
     board_1, list_of_creatures = creatures.random_creatures_locations(board_1, board_index, list_of_creatures)
     icons = creatures.enemy_pics()
     util.clear_screen()
@@ -32,7 +32,7 @@ def main():
         if key == 'q':
             is_running = False
         else:
-            board_1, list_of_creatures = movement.player_move(board_1, PLAYER_ICON, key, list_of_creatures)
+            board_1, list_of_creatures = movement.player_move(board_1, PLAYER, key, list_of_creatures, inventory, list_of_items)
             board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
             ui.display_board(board_1)
             util.clear_screen()
