@@ -49,8 +49,24 @@ def main():
             util.clear_screen()
             ui.display_board(board_1)
              
-        elif key == "i":
-            inventory.print_inventory()#czy zatrzymać na kilka sekund ?
+        elif key.lower() == "i":
+            inventory.print_inventory()
+            player_input = input("If you want to use an item from your inventory - press U ")
+            if player_input.lower() == "u":
+                name_item = input("Enter the name of the item you want to use")
+                if name_item.lower() == "apple":
+                    pass
+                elif name_item.lower() == "egg":
+                    pass
+                elif name_item.lower() == "cone":
+                    pass
+                elif name_item.lower() == "stick":
+                    pass
+                elif name_item.lower() == "key":
+                    pass
+
+                
+            #czy zatrzymać na kilka sekund ?
             # board_1, list_of_creatures = movement.player_move(board_1, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
             # board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
             # util.clear_screen() 
