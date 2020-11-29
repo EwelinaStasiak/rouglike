@@ -8,6 +8,7 @@ import items
 import inventory
 
 
+
 def main():
     # global HERO
     # global inventory_hero
@@ -21,7 +22,7 @@ def main():
     board_1 = player.put_player_on_board(board_1)
     #board_index = gen_boards.board_indexes(board_1)
     worm, car, lory, dog, hen = creatures.creatures()
-    ui.display_board(board_1)
+    
     list_of_creatures = creatures.creatures_on_the_board_dicts(worm)
     list_of_items = list(items.create_items())
     board_1, list_of_creatures = creatures.random_creatures_locations(board_1, board_index, list_of_creatures)
@@ -29,15 +30,13 @@ def main():
     
     util.clear_screen()
     ui.display_board(board_1)
-    util.clear_screen()
-
+     
     is_running = True
 
     while is_running:
-        ui.display_board(board_1)
+        
         player.print_player_info()
         key = util.key_pressed()
-        util.clear_screen()
         if not player.is_it_alive():
             is_running = False
             player.print_end_game()
@@ -46,14 +45,16 @@ def main():
         else:
             board_1, list_of_creatures = movement.player_move(board_1, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
             board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
-            ui.display_board(board_1)
             util.clear_screen()
+            ui.display_board(board_1)
+            
+            
         if key == "i":
-            inventory.print_inventory(inventory_hero)#czy zatrzymać na kilka sekund ?
+            inventory.print_inventory(inventory.inventory_hero)#czy zatrzymać na kilka sekund ?
             board_1, list_of_creatures = movement.player_move(board_1, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
             board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
+            util.clear_screen() 
             ui.display_board(board_1)
-            util.clear_screen()
 
 if __name__ == '__main__':
     main()
