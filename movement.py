@@ -2,6 +2,7 @@ import random
 import fight
 import interaction
 import termcolor
+import player
 
 def character_position(character_icon, board):
     for row in range(len(board)):
@@ -26,9 +27,9 @@ def direction_of_movement(key, character_coordinate):
     else:
         return [row, col]
 
-def player_move(board, player, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
+def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
     enemy_icon = ["W"]
-    player_icon = "@" #player.get("picture")
+    player_icon = player.hero.get("picture")
     elements_without_interaction = [" ", "#"]
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
 
@@ -55,7 +56,7 @@ def player_move(board, player, key, list_of_creatures, inventory, list_of_items,
     elif next_position not in elements_without_interaction and next_position not in enemy_icon:
         for item in list_of_items:
             if item.get("picture") == next_position:
-                board = interaction.player_interaction(player, inventory, board, item, next_player_coordinate, player_coordinate)
+                board = interaction.player_interaction(board, item, next_player_coordinate, player_coordinate)
                 break
     return board, list_of_creatures
 

@@ -1,18 +1,37 @@
 import items
 import inventory
+import player
 
 
-def player_interaction(player, player_inventory, board, item, position_item, position_player):
+def player_interaction(board, item, position_item, position_player):
     if item.get("kind") == "Food":
         choose_player = choose_interaction("Food", item.get("name"))
         if choose_player == "E":
-            items.eat_food(player, item)
+            items.eat_food(item)
+            board[position_player[0]][position_player[1]] = " "
+            board[position_item[0]][position_item[1]] = player.hero.get("picture")
+            return board
+            
         elif choose_player == "I":
-            inventory.add_to_inventory(player_inventory)
+            inventory.add_to_inventory(item.get("name"))
+            board[position_player[0]][position_player[1]] = " "
+            board[position_item[0]][position_item[1]] = player.hero.get("picture")
+            return board
     elif item.get("kind") == "Weapon":
-        pass
+        choose_player = choose_interaction("Weapon", item.get("name"))
+        if choose_player == "I":
+            inventory.add_to_inventory(item.get("name"))
+            board[position_player[0]][position_player[1]] = " "
+            board[position_item[0]][position_item[1]] = player.hero.get("picture")
+            return board
     elif item.get("kind") == "Tool":
-        pass
+        choose_player = choose_interaction("Tool", item.get("name"))
+        if choose_player == "I":
+            inventory.add_to_inventory(item.get("name"))
+            board[position_player[0]][position_player[1]] = " "
+            board[position_item[0]][position_item[1]] = player.hero.get("picture")
+            return board
+
 
 def choose_interaction(kind, item_name):
     correct_answer = ["E", "I", "N"]

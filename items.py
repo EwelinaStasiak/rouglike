@@ -1,3 +1,6 @@
+import player
+
+
 def create_items():
     apple = {'name' : "Apple", 'kind' : "Food", 'value_health' : 2, 'worm': False, 'collecting' : True, 'duration' : 60, 'picture' : "A"} # collecting - czy przedmiot podnosi się autoamtycznie, czy użytkownik musi wyrazić zgodę
     wormy_apple = {'name' : "Wormy Apple", 'kind' : "Food", 'value_healt' : 2, 'worm': True, 'collecting' : True, 'duration' :60, 'picture' : "Y"}
@@ -9,12 +12,13 @@ def create_items():
     return apple,wormy_apple,egg,cone,stick,key 
 
 
-def eat_food(hero, food): #Tutaj brakowało parabetru hero?
+def eat_food(food): #Tutaj brakowało parabetru hero?
     #pobieramy parametr food,bo nie tylko jabłko będzie dodawało 'życie'
-    if hero["health"] + food.get("value_health",0) > hero["max_health"]:
+    if player.hero["health"] + food.get("value_health",0) > player.hero["max_health"]:
         pass
     else :
-        hero["health"] += food.get("value_health",0)
+        player.hero["health"] += food.get("value_health",0)
+    
 
 def random_items_locations(board, board_indexes, list_of_creatures):
     floor = " "
