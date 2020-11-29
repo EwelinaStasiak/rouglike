@@ -4,6 +4,7 @@ import interaction
 import termcolor
 import player
 
+
 def character_position(character_icon, board):
     for row in range(len(board)):
         for col in range(len(board[row])):
@@ -11,6 +12,7 @@ def character_position(character_icon, board):
                 character_coordinate = [row, col]
 
     return character_coordinate
+
 
 def direction_of_movement(key, character_coordinate):
     row = character_coordinate[0]
@@ -26,6 +28,7 @@ def direction_of_movement(key, character_coordinate):
         return [row, col + 1]
     else:
         return [row, col]
+
 
 def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
     enemy_icon = ["W"]
@@ -60,6 +63,7 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
                 break
     return board, list_of_creatures
 
+
 def getting_off_the_portal(board, portal_indices, possible_coordinates):
     next_indices = ()
     row, col = portal_indices
@@ -72,6 +76,7 @@ def getting_off_the_portal(board, portal_indices, possible_coordinates):
         return (row, col + 1)
     elif (row, col - 1) in possible_coordinates and board[row][col - 1] != "#":
         return (row, col - 1)
+
 
 def creature_movement(board, list_of_creatures, enemy_icon):
     keybord_keys = ["W", "S", "A", "D"]
@@ -92,7 +97,7 @@ def creature_movement(board, list_of_creatures, enemy_icon):
             creature["location"] = (new_row, new_col)
             board, list_of_creatures = fight.fight(board, list_of_creatures, (new_row, new_col))
         else:
-           creature["location"] = (row, col)
+            creature["location"] = (row, col)
     
     return board, list_of_creatures
 

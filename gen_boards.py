@@ -7,6 +7,7 @@ BOARDS FROM TXT
 ––––––––––––––––––––––––––––––––––––––––––––––
 """
 
+
 def load_board(path):
     board = []
 

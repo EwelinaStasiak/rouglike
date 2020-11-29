@@ -1,4 +1,4 @@
-def create_board(width, hight, space = " ", vert_boarder = " ", horis_boarder = " "):
+def create_board(width, hight, space=" ", vert_boarder=" ", horis_boarder=" "):
     board = []
     first_last_row = [0, hight - 1]
 
@@ -9,6 +9,7 @@ def create_board(width, hight, space = " ", vert_boarder = " ", horis_boarder = 
             board.append([vert_boarder] + [space] * (width - 2) + [vert_boarder])
     
     return board
+
 
 def put_player_on_board(board, player):
     '''

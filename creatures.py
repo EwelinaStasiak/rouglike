@@ -1,15 +1,14 @@
 import random
-import gen_boards
-import ui
+
 
 def creatures():
-     worm = {'name' : "Worm", 'kind' : "Enemy", 'health' : 2, "min_damage" : 1, "max_damage" : 1, "num_to_place" : 5, 'pic' : "W"} #128027}
-     car = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 5, "max_damage" : 10, "num_to_place" : 15, 'pic' : "C"} #128663}
-     lorry = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 20, "max_damage" : 50, "num_to_place" : 5, 'pic' : "L"} #128666}
-     dog = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 1, "max_damage" : 5, "num_to_place" : 5, 'pic' : "D"} #128021}
-     hen = {'name' : "Hen", 'kind' : "Firend", 'health' : 5, 'pic' : "H"} #128020}
+    worm = {'name' : "Worm", 'kind' : "Enemy", 'health' : 2, "min_damage" : 1, "max_damage" : 1, "num_to_place" : 5, 'pic' : "W"} #128027}
+    car = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 5, "max_damage" : 10, "num_to_place" : 15, 'pic' : "C"} #128663}
+    lorry = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 20, "max_damage" : 50, "num_to_place" : 5, 'pic' : "L"} #128666}
+    dog = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 1, "max_damage" : 5, "num_to_place" : 5, 'pic' : "D"} #128021}
+    hen = {'name' : "Hen", 'kind' : "Firend", 'health' : 5, 'pic' : "H"} #128020}
 
-     return worm, car, lorry, dog, hen
+    return worm, car, lorry, dog, hen
 
     
 def creatures_on_the_board_dicts(creature):
@@ -22,6 +21,7 @@ def creatures_on_the_board_dicts(creature):
         list_of_creatures.append(monster)
     
     return list_of_creatures
+
 
 def random_creatures_locations(board, board_indexes, list_of_creatures):
     floor = " "
@@ -36,6 +36,7 @@ def random_creatures_locations(board, board_indexes, list_of_creatures):
                 value = True
 
     return board, list_of_creatures
+
 
 def car_placement(board, board_indices, list_of_vehiculs):
     vehiculs_to_place = len(list_of_vehiculs)
@@ -69,6 +70,7 @@ def car_placement(board, board_indices, list_of_vehiculs):
 #             creatures_number -= 1
 
 #     return board, creatures_locations
+
 
 def enemy_pics():
     creatures_list = creatures()

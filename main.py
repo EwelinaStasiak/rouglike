@@ -8,7 +8,6 @@ import items
 import inventory
 
 
-
 def main():
     # global HERO
     # global inventory_hero
@@ -47,8 +46,7 @@ def main():
             board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
             util.clear_screen()
             ui.display_board(board_1)
-            
-            
+             
         if key == "i":
             inventory.print_inventory(inventory.inventory_hero)#czy zatrzymać na kilka sekund ?
             board_1, list_of_creatures = movement.player_move(board_1, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
@@ -56,5 +54,7 @@ def main():
             util.clear_screen() 
             ui.display_board(board_1)
 
+
 if __name__ == '__main__':
     main()
+    

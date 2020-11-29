@@ -2,7 +2,8 @@ import random
 import player
 import portals
 
-def create_board(hight = 41, width = 81, space = " ", vert_boarder = " ", horis_boarder = " "):
+
+def create_board(hight=41, width=81, space=" ", vert_boarder=" ", horis_boarder=" "):
     board = []
     first_last_row = [0, hight - 1]
 
@@ -13,6 +14,7 @@ def create_board(hight = 41, width = 81, space = " ", vert_boarder = " ", horis_
             board.append([vert_boarder] + [space] * (width - 2) + [vert_boarder])
     
     return board
+
 
 def generate_chembers():
     chembers = []
@@ -25,6 +27,7 @@ def generate_chembers():
         hight_and_width[num] = (hight, width)
     
     return chembers, hight_and_width
+
 
 def random_chembers_indices(board_hight, board_width, first_row_col, hight_and_width):
     chemb_1_hight, chemb_1_width = hight_and_width[1]
@@ -47,6 +50,7 @@ def random_chembers_indices(board_hight, board_width, first_row_col, hight_and_w
 
     return random_row_1, random_col_1, random_row_2, random_col_2
 
+
 def placing_chembers():
     board_hight = 31
     board_width = 81
@@ -66,6 +70,7 @@ def placing_chembers():
     portals_dict = gen_portals_dict(yellow1_green1_portals + blue1_yellow_2_portals + green2_blue_2_portals)
 
     return board, available_coordinates, portals_dict
+
 
 def gen_portals_dict(portals):
     portals_dict = {}
@@ -104,6 +109,7 @@ def placing_1st_chember(board, chember_1, row_1, available_coordinates, dimensio
 
     return board, portal_indices, available_coordinates
 
+
 def placing_2nd_chember(board, chember_2, col_1, available_coordinates, dimensions):
     col_for_portal = col_1
     for row_num in range(len(chember_2)):
@@ -118,6 +124,7 @@ def placing_2nd_chember(board, chember_2, col_1, available_coordinates, dimensio
     board, portal_indices = portals.chember_2_portals(board, dimensions, col_for_portal)
     
     return board, portal_indices, available_coordinates
+
 
 def placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, dimensions) :
     row_for_portal = row_2
@@ -179,16 +186,19 @@ def placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, d
 
 #     return board
 
+
 def print_a_board(board):
     for row in board:
         for el in row:
             print(el, end = "")
         print()
 
+
 def main():
     board, available_coordinates = placing_chembers()
     print_a_board(board)
     print(len(available_coordinates))
+
 
 if __name__ == "__main__":
     main()
