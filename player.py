@@ -1,6 +1,8 @@
+
+
+
 def create_player(user_choice):
     global hero
-    
     'Tworzy bohatera wg wyboru użytkownika'
     if user_choice == "1":
         hero = {'name': "Mikolaj", 'species': "hedgehog", 'health': 10, 'max_load': 15, "max_health": 25, "picture": "@"}

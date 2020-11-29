@@ -1,6 +1,10 @@
+
+
+
 def create_inventory():
     global inventory_hero
     inventory_hero = {"start": 0}
+    return inventory_hero
     
 
 def add_to_inventory(added_items):
