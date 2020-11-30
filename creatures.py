@@ -4,9 +4,9 @@ import random
 def creatures():
     worm = {'name' : "Worm", 'kind' : "Enemy", 'health' : 2, "min_damage" : 1, "max_damage" : 1, "num_to_place" : 5, 'pic' : "W"} #128027}
     car = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 5, "max_damage" : 10, "num_to_place" : 15, 'pic' : "C"} #128663}
-    lorry = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 20, "max_damage" : 50, "num_to_place" : 5, 'pic' : "L"} #128666}
-    dog = {'name' : "Car", 'kind' : "Enemy", 'health' : 20, "min_damage" : 1, "max_damage" : 5, "num_to_place" : 5, 'pic' : "D"} #128021}
-    hen = {'name' : "Hen", 'kind' : "Firend", 'health' : 5, 'pic' : "H"} #128020}
+    lorry = {'name' : "Lorry", 'kind' : "Enemy", 'health' : 20, "min_damage" : 20, "max_damage" : 50, "num_to_place" : 5, 'pic' : "L"} #128666}
+    dog = {'name' : "Dog", 'kind' : "Enemy", 'health' : 20, "min_damage" : 1, "max_damage" : 5, "num_to_place" : 5, 'pic' : "D"} #128021}
+    hen = {'name' : "Hen", 'kind' : "Firend", 'health' : 5, "num_to_place" : 1, 'pic' : "H"} #128020}
 
     return worm, car, lorry, dog, hen
 
@@ -37,26 +37,38 @@ def random_creatures_locations(board, board_indexes, list_of_creatures):
 
     return board, list_of_creatures
 
+def non_road_coordinates(board_indices, road_rows):
+    row = 0
+    for indices in board_indices:
+        if indices[row] in road_rows:
+            board_indices.remove(indices)
+    
+    return board_indices
 
 def car_placement(board, board_indices, list_of_vehiculs):
     vehiculs_to_place = len(list_of_vehiculs)
-    possible_rows = [15, 16, 17, 19, 20, 21]
+    road_rows = [15, 16, 17, 19, 20, 21]
+    non_road_indices = non_road_coordinates(board_indices, road_rows)
     min_col = 1
     max_col = 78
 
     while vehiculs_to_place > 0:
-        row_index = random.choice(possible_rows)
+        row_index = random.choice(road_rows)
         col_index = random.randint(min_col, max_col)
         
         if board[row_index][col_index] == " " and board[row_index][col_index + 2] == " ":
             vehicul = list_of_vehiculs[vehiculs_to_place - 1]
             if vehicul["name"] == "Lorry":
                 board[row_index][col_index : col_index + 2] = [vehicul["pic"]] * 2
-            else:
+                vehicul["location"] = (row_index, col_index)
+            elif vehicul["name"] == "Car":
                 board[row_index][col_index] = vehicul["pic"]
+                vehicul["location"] = (row_index, col_index)
+            else:
+                random_creatures_locations(board, non_road_indices, [vehicul])
             vehiculs_to_place -= 1
     
-    return board
+    return board, list_of_vehiculs
 
 # def random_creatures_locations(board, board_indexes, list_of_creatures):
 #     floor = " "

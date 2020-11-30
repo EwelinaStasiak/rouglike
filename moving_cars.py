@@ -1,4 +1,4 @@
-import second_board
+import first_board
 import random
 import creatures
 import gen_boards
@@ -21,14 +21,14 @@ def car_movement(board, list_of_vehiculs):
             else:
                 new_col = col - 1
             board[row][new_col] = vehicul["pic"]
-        else:
+        elif kind == "Lorry":
             board[row][col : col + 2] = [floor] * 2
             if col == min_col:
                 new_col = max_col - 1
             else:
                 new_col = col - 1
             board[row][new_col : new_col+2] = [vehicul["pic"]] * 2
-        
+
         vehicul["location"] = (row, new_col)
 
     return board, list_of_vehiculs         
@@ -37,7 +37,7 @@ def cars_in_the_move(board, list_of_vehiculs):
     while True:
         board, list_of_vehiculs =  car_movement(board, list_of_vehiculs)
         os.system("cls | clear")
-        second_board.print_a_board(board)
+        first_board.print_a_board(board)
         time.sleep(0.1)
 
 def main():
@@ -51,8 +51,8 @@ def main():
         vehiculs_list.append(car_or_lorry)
         on_board_vehiculs += creatures.creatures_on_the_board_dicts(car_or_lorry)
 
-    board = second_board.create_board(41, 81, " ", "#", "#")
-    board = second_board.sec_board(board)
+    board = first_board.create_board(41, 81, " ", "#", "#")
+    board = first_board.sec_board(board)
     board_index = gen_boards.board_indexes(board)
     board, list_of_vehiculs = creatures.car_placement(board, board_index, on_board_vehiculs)
     cars_in_the_move(board, list_of_vehiculs)

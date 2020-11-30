@@ -15,6 +15,11 @@ def create_board(hight=41, width=81, space=" ", vert_boarder=" ", horis_boarder=
     
     return board
 
+"""
+–––––––––––––––––––––––––––––––––––––
+Board_1
+–––––––––––––––––––––––––––––––––––––
+"""
 
 def generate_chembers():
     chembers = []
@@ -80,19 +85,6 @@ def gen_portals_dict(portals):
         portals_dict[portals[n+3]] = portals[n]
     
     return portals_dict
-    
-    # green_1 = 1
-    # green_2 = 4
-    # yellow_1 = 0
-    # yellow_2 =3
-    # blue_1 = 2
-    # blue_2 = 5
-
-
-    # yellow_1, green_1 = green1_yellow1
-    # blue_1, yellow_2 = blue1_yellow_2
-    # green_2, blue_2 = green2_blue_2
-    # portals_dict = {}
 
 
 def placing_1st_chember(board, chember_1, row_1, available_coordinates, dimensions):
@@ -142,50 +134,55 @@ def placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, d
 
     return board, portal_indices, available_coordinates
 
-# def placing_chembers():
-#     board_hight = 31
-#     board_width = 81
-#     board = create_board(board_hight, board_width)
-#     first_row_col = 0
-#     last_row = board_hight - 1
-#     last_col = board_width - 1
 
-#     chembers, hight_and_width = generate_chembers()
-#     chember_1, chember_2, chember_3 = chembers
-#     chemb_1_hight, chemb_1_width = hight_and_width[1]
-#     chemb_2_hight, chemb_2_width = hight_and_width[2]
-#     chemb_3_hight, chemb_3_width = hight_and_width[3]
+"""
+–––––––––––––––––––––––––––––––––––––
+Board_2
+–––––––––––––––––––––––––––––––––––––
+"""
 
-#     random_row_1 = random.randint(first_row_col, board_hight - chemb_1_hight)
+def sec_board(board):
+    road_banch = [14, 22]
+    road_strips = [" ", "–"]
+
+    for index in road_banch:
+        board[index][1 : 80] = ["–"] * 79
     
-#     if random_row_1 > chemb_2_hight:
-#         random_col_1 = random.randint(first_row_col, board_width - chemb_2_width)
-#     else:
-#         random_col_1 = random.randint(chemb_1_width, board_width - chemb_2_width)
+    midle_road_index = 1
+    while midle_road_index < 77:
+        for el in road_strips:
+            board[18][midle_road_index : midle_road_index + 2] = [el] * 2
+            midle_road_index += 2
     
-#     random_row_2 = random.randint(chemb_2_hight, board_hight - chemb_3_hight)
+    return board, board_all_indices(board)
 
-#     if random_row_1 + chemb_1_hight < random_row_2:
-#         random_col_2 = random.randint(first_row_col, board_width - chemb_3_width)
-#     else:
-#         random_col_2 = random.randint(chemb_1_width, board_width - chemb_3_width)
+def car_placement(board):
+    car = 20
 
-
-#     for row_num in range(len(chember_1)):
-#         board[random_row_1][first_row_col : chemb_1_width] = chember_1[row_num]
-#         random_row_1 += 1
+    while car > 0:
+        road_indices = [15, 16, 17, 19, 20, 21]
+        row_index = random.choice(road_indices)
+        col_index = random.randint(1, 78)
+        
+        if board[row_index][col_index] == " " and board[row_index][col_index + 2] == " ":
+            board[row_index][col_index : col_index + 2] = ["C"] * 2
+            car -= 1
     
-#     for row_num in range(len(chember_2)):
-#         board[row_num][random_col_1 : random_col_1 + chemb_2_width - 1] = chember_2[row_num]
-    
-#     for row_num in range(len(chember_3)):
-#         board[random_row_2][random_col_2 : random_col_2 + chemb_3_width - 1] = chember_3[row_num]
-#         random_row_2 += 1
+    return board
 
-    
+def board_all_indices(board):
+    board_indices = []
 
-#     return board
+    for row_num in range(len(board)):
+        for col_num in range(len(board[row_num])):
+            board_indices.append((row_num, col_num))
 
+    return board_indices
+"""
+–––––––––––––––––––––––––––––––––––––
+PRINT
+–––––––––––––––––––––––––––––––––––––
+"""
 
 def print_a_board(board):
     for row in board:
