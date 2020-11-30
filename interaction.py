@@ -12,7 +12,7 @@ def player_interaction(board, item, position_item, position_player):
         board[position_item[0]][position_item[1]] = player.hero.get("picture")
             
     elif choose_player == "I":
-        inventory.add_to_inventory(item.get("name"))
+        inventory.add_to_inventory(item)
         board[position_player[0]][position_player[1]] = " "
         board[position_item[0]][position_item[1]] = player.hero.get("picture")
     elif choose_player == "N":

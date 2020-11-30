@@ -1,6 +1,4 @@
 
-
-
 def create_player(user_choice):
     global hero
     'Tworzy bohatera wg wyboru użytkownika'

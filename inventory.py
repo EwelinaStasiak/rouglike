@@ -1,4 +1,5 @@
-
+import items
+import boss
 
 
 def create_inventory():
@@ -39,3 +40,31 @@ def print_inventory():  # if user press "I"
         print("{:>12} | {:<5}".format(key, value))
     print(20*"-")
 
+
+def use_item_from_inventory(list_of_items, fight_with_boss=False):
+    items_name = []
+    for item in list_of_items:
+        items_name.append(item.get("name"))
+
+    first_letter = input("Enter the first letter of the item you want to use")
+    if first_letter.lower() == "a":
+        if "Apple" in inventory_hero:
+            index_name = items_name.index("Apple")
+            remove_from_inventory("Apple")
+            items.eat_food(list_of_items[index_name])
+            
+    elif first_letter.lower() == "e":
+        if "Egg" in inventory_hero:
+            index_name = items_name.index("Egg")
+            remove_from_inventory("Egg")
+            items.eat_food(list_of_items[index_name])
+    elif first_letter.lower() == "c":
+        if "Cone" in inventory_hero:
+            index_name = items_name.index("Cone")
+            remove_from_inventory("Cone")
+            if fight_with_boss:
+                boss = boss.fight_boss()
+    elif first_letter.lower() == "s":
+        pass
+    elif first_letter.lower() == "k":
+        pass
