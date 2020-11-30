@@ -1,8 +1,12 @@
 import random
+import player
 
 def who_is_the_oponent(list_of_creatures, location):
     for creature in list_of_creatures:
-        if creature["location"] == location: return list_of_creatures.index(creature)
+        if location == creature["location"]:
+            return list_of_creatures.index(creature)
+        elif location == player.hero.get("location"):
+            return False
 
 def carry_damage(attacker, opponent):
     damage = random.randint(attacker["min_damage"], attacker["max_damage"])
@@ -22,11 +26,15 @@ def did_it_hit():
 
 def fight(board, attacker, list_of_creatures, location):
     row, col = location
-    #opponent = list_of_creatures[0]
     creature_index = who_is_the_oponent(list_of_creatures, location)
-    opponent = list_of_creatures[creature_index]
-    #print(carry_damage(opponent, 2))
+
+    if creature_index:
+        opponent = list_of_creatures[creature_index]
+    else:
+        opponent = player.hero
+
     hit = did_it_hit()
+
     if hit:
         opponent = carry_damage(attacker, opponent)
         if opponent:

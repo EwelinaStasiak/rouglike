@@ -24,6 +24,7 @@ def main():
     
     list_of_creatures = creatures.creatures_on_the_board_dicts(worm)
     list_of_items = list(items.create_items())
+    print(list_of_items)
     board_1, list_of_creatures = creatures.random_creatures_locations(board_1, board_index, list_of_creatures)
     icons = creatures.enemy_pics()
     
@@ -53,17 +54,7 @@ def main():
             inventory.print_inventory()
             player_input = input("If you want to use an item from your inventory - press U ")
             if player_input.lower() == "u":
-                name_item = input("Enter the name of the item you want to use")
-                if name_item.lower() == "apple":
-                    pass
-                elif name_item.lower() == "egg":
-                    pass
-                elif name_item.lower() == "cone":
-                    pass
-                elif name_item.lower() == "stick":
-                    pass
-                elif name_item.lower() == "key":
-                    pass
+                inventory.use_item_from_inventory(list_of_items)
 
                 
             #czy zatrzymać na kilka sekund ?

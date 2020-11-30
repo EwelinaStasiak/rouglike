@@ -14,9 +14,9 @@ def create_items():
 
 def eat_food(food): #Tutaj brakowało parabetru hero?
     #pobieramy parametr food,bo nie tylko jabłko będzie dodawało 'życie'
-    if player.hero["health"] + food.get("value_health",0) > player.hero["max_health"]:
-        pass
-    else :
+    if player.hero["health"] + food.get("value_health",0) >= player.hero["max_health"]:
+        player.hero["health"] = player.hero["max_health"]
+    else:
         player.hero["health"] += food.get("value_health",0)
     
 

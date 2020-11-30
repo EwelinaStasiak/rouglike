@@ -1,6 +1,4 @@
 
-
-
 def create_player(user_choice):
     global hero
     'Tworzy bohatera wg wyboru użytkownika'
@@ -14,7 +12,7 @@ def create_player(user_choice):
 
 
 def put_player_on_board(board):
-    
+    global hero
     player_icon = hero.get("picture")
     for row in range(len(board)):
         for col in range(len(board[row])):

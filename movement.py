@@ -37,30 +37,33 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
     elements_without_interaction = [" ", "#"]
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
 
-    player_coordinate = character_position(player_icon, board)
+    row, col = character_position(player_icon, board)
 
-    next_player_coordinate = direction_of_movement(key, player_coordinate)
+    next_row, next_col = direction_of_movement(key, (row, col))
+    #next_player_coordinate = direction_of_movement(key, player_coordinate)
     #next_row = next_player_coordinate[0] # Moze to tak skrócić, by było bardziej czytelne?
     #next_col = next_player_coordinate[1]
-    next_position = board[next_player_coordinate[0]][next_player_coordinate[1]]
+    next_position = board[next_row][next_col]
     
     if next_position == " " or next_position == player_icon:    # next_position == player_icon zabezpieczenie jak wciśnie się coś innego niż W, S, A, D. Player zostaje w tym samym miejscu 
-        board[player_coordinate[0]][player_coordinate[1]] = " "
-        board[next_player_coordinate[0]][next_player_coordinate[1]] = player_icon
+        board[row][col] = " "
+        board[next_row][next_col] = player_icon
+        player.hero["location"] = (next_row, next_col)
     
-    elif (next_player_coordinate[0], next_player_coordinate[1]) in portals_dict:
-        board[player_coordinate[0]][player_coordinate[1]] = " "
-        portal_indices = portals_dict[(next_player_coordinate[0], next_player_coordinate[1])]
+    elif (next_row, next_col) in portals_dict:
+        board[row][col] = " "
+        portal_indices = portals_dict[(next_row, next_col)]
         next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
         board[next_row][next_col] = player_icon
+        player.hero["location"] = (next_row, next_col)
 
     elif next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
-        board, list_of_creatures = fight.fight(board, player.hero, list_of_creatures, (player_coordinate[0], player_coordinate[1]))
+        board, list_of_creatures = fight.fight(board, player.hero, list_of_creatures, (next_row, next_col))
 
     elif next_position not in elements_without_interaction and next_position not in enemy_icon:
         for item in list_of_items:
             if item.get("picture") == next_position:
-                board = interaction.player_interaction(board, item, next_player_coordinate, player_coordinate)
+                board = interaction.player_interaction(board, item, [next_row, next_col], [row, col])
                 break
     return board, list_of_creatures
 
@@ -92,12 +95,10 @@ def random_creature_move(board, list_of_creatures, floor = " "):
             board[new_row][new_col] = board[row][col]
             board[row][col] = floor
             creature["location"] = (new_row, new_col)
-        elif board[new_row][new_col] in [player_icon] + [enemy_icons]:
-            creature["location"] = (new_row, new_col)
-            board, list_of_creatures = fight.fight(board, creature, list_of_creatures, (new_row, new_col))
 
-        else:
-            creature["location"] = (row, col)
+        elif board[new_row][new_col] == player_icon or board[new_row][new_col] in enemy_icons:
+            board, list_of_creatures = fight.fight(board, creature, list_of_creatures, (new_row, new_col))
+            #creature["location"] = (new_row, new_col)
     
     return board, list_of_creatures
 
