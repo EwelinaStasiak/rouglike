@@ -7,25 +7,25 @@ import util
 import movement
 
 board_1_dict = {
-    "board" : None,
-    "available_indices" : None,
-    "portals_dict" : None,
+    "board" : [],
+    "available_indices" : [],
+    "portals_dict" : {},
     "list_of_creatures" : [],
     "list_of_items" : []
 }
 
 board_2_dict = {
-    "board" : None,
-    "available_indices" : None,
-    "portals_dict" : None,
+    "board" : [],
+    "available_indices" : [],
+    "portals_dict" : {},
     "list_of_creatures" : [],
     "list_of_items" : []
 }
 
 board_3_dict = {
-    "board" : None,
-    "available_indices" : None,
-    "portals_dict" : None,
+    "board" : [],
+    "available_indices" : [],
+    "portals_dict" : {},
     "list_of_creatures" : [],
     "list_of_items" : []
 } 
@@ -82,13 +82,13 @@ def screen_display(board):
 def inventory_management():
     pass
 
-def creatures_life(list_of_creatures):
-    n = 1
-    for creature in list_of_creatures:
-        print(f"{creature['name']} no {n}. hp: {creature['health']}")
+# def creatures_life(list_of_creatures):
+#     n = 1
+#     for creature in list_of_creatures:
+#         print(f"{creature['name']} no {n}. hp: {creature['health']}")
 
 def tour(board_dict, key, inventory = [], list_of_items = []):
-    creatures_life(board_dict["list_of_creatures"])
+    #creatures_life(board_dict["list_of_creatures"])
     board, list_of_creatures = movement.player_move(board_dict["board"], key, board_dict["list_of_creatures"], inventory, list_of_items, board_dict["portals_dict"], board_dict["available_indices"])
     board, list_of_creatures = movement.creature_movement(board_dict["board"], board_dict["list_of_creatures"])
 
@@ -109,6 +109,7 @@ def key_management(board_dict, move_keys = ["w", "s", "a", "d"]):
 
 def levels_menagement(is_running = True):
     global board_1_dict, board_2_dict, board_3_dict
+    #list_of_boards = [board_2_dict, board_3_dict]
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
 
     for board_dict in list_of_boards:

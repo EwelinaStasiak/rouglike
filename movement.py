@@ -4,6 +4,7 @@ import interaction
 import termcolor
 import player
 import manage_boards
+import hen_talk
 
 
 def character_position(character_icon, board):
@@ -35,6 +36,7 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
     enemy_icon = ["W", "D", "C", "L"]
     player_icon = player.hero.get("picture")
     elements_without_interaction = [" ", "#"]
+    hen_icon = "H"
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
 
     row, col = character_position(player_icon, board)
@@ -59,6 +61,9 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
 
     elif next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
         board, list_of_creatures = fight.fight(board, player.hero, list_of_creatures, (next_row, next_col))
+    
+    elif next_position == hen_icon:
+        hen_talk.talking_to_hen(board)
 
     elif next_position not in elements_without_interaction and next_position not in enemy_icon:
         for item in list_of_items:
