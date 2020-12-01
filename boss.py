@@ -7,6 +7,7 @@ def create_boss():
 
     return boss
 
+
 def put_boss_on_board():
     pass
 
@@ -23,7 +24,7 @@ def fight_boss(weapon, boss):
             stone = stone_throw()
             hit_hero = did_it_hit()
             if stone and hit_hero:
-                player.hero["health"] -= 3
+                player.hero["health"] -= 3 #
             elif hit_hero:
                 player.hero["health"] -= 1
 
