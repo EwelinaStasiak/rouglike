@@ -22,10 +22,12 @@ def main():
     #board_index = gen_boards.board_indexes(board_1)
     worm, car, lory, dog, hen = creatures.creatures()
     
+    
     list_of_creatures = creatures.creatures_on_the_board_dicts(worm)
-    list_of_items = list(items.create_items())
-    print(list_of_items)
+    list_of_items = items.create_items()
+    items_on_board = items.items_on_board(list_of_items)
     board_1, list_of_creatures = creatures.random_creatures_locations(board_1, board_index, list_of_creatures)
+    board_1 = items.random_items_locations(board_1,board_index,items_on_board)
     icons = creatures.enemy_pics()
     
     util.clear_screen()
@@ -46,7 +48,7 @@ def main():
             exit()
         elif key.lower() in move_key:
             board_1, list_of_creatures = movement.player_move(board_1, key, list_of_creatures, inventory, list_of_items, portals_dict, board_index)
-            board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures, icons)
+            board_1, list_of_creatures = movement.creature_movement(board_1, list_of_creatures)
             util.clear_screen()
             ui.display_board(board_1)
              
@@ -54,7 +56,17 @@ def main():
             inventory.print_inventory()
             player_input = input("If you want to use an item from your inventory - press U ")
             if player_input.lower() == "u":
-                inventory.use_item_from_inventory(list_of_items)
+                name_item = input("Enter the name of the item you want to use")
+                if name_item.lower() == "apple":
+                    pass
+                elif name_item.lower() == "egg":
+                    pass
+                elif name_item.lower() == "cone":
+                    pass
+                elif name_item.lower() == "stick":
+                    pass
+                elif name_item.lower() == "key":
+                    pass
 
                 
             #czy zatrzymać na kilka sekund ?
