@@ -3,16 +3,16 @@ def create_player(user_choice):
     global hero
     'Tworzy bohatera wg wyboru użytkownika'
     if user_choice == "1":
-        hero = {'name': "Mikolaj", 'species': "hedgehog", 'health': 10, 'max_load': 15, "max_health": 25, "picture": "@"}
+        hero = {'name': "Mikolaj", 'species': "hedgehog", 'health': 10, 'max_load': 15, "max_health": 25, "min_damage" : 2, "max_damage" : 5,  "picture": "@"}
     elif user_choice == "2":
-        hero = {'name': "Mikolaj", 'species': " Magic hedgehog", 'health': 15, 'max_load': 10, 'skill': "magic", "max_health": 25, "picture": "@"}
+        hero = {'name': "Mikolaj", 'species': " Magic hedgehog", 'health': 15, 'max_load': 10, 'skill': "magic", "max_health": 25, "min_damage" : 0, "max_damage" : 7, "picture": "@"}
     elif user_choice == "3":
-        hero = {'name': "Mikolaj", 'species': "Invisible hedgehog", 'health': 5, 'max_load': 5, 'skill': "invisible", "max_health": 25, "picture": "@"}    
+        hero = {'name': "Mikolaj", 'species': "Invisible hedgehog", 'health': 5, 'max_load': 5, 'skill': "invisible", "max_health": 25, "min_damage" : 10, "max_damage" : 25, "picture": "@"}    
     return hero
 
 
 def put_player_on_board(board):
-    
+    global hero
     player_icon = hero.get("picture")
     for row in range(len(board)):
         for col in range(len(board[row])):
@@ -22,6 +22,7 @@ def put_player_on_board(board):
                 board[player_start_row][player_start_col] = player_icon
                 
                 return board
+
 
 
 def is_it_alive(): #Tutaj brakowało parabetru heros?
