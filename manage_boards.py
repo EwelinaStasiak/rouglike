@@ -82,7 +82,13 @@ def screen_display(board):
 def inventory_management():
     pass
 
+def creatures_life(list_of_creatures):
+    n = 1
+    for creature in list_of_creatures:
+        print(f"{creature['name']} no {n}. hp: {creature['health']}")
+
 def tour(board_dict, key, inventory = [], list_of_items = []):
+    creatures_life(board_dict["list_of_creatures"])
     board, list_of_creatures = movement.player_move(board_dict["board"], key, board_dict["list_of_creatures"], inventory, list_of_items, board_dict["portals_dict"], board_dict["available_indices"])
     board, list_of_creatures = movement.creature_movement(board_dict["board"], board_dict["list_of_creatures"])
 

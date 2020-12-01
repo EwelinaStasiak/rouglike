@@ -21,6 +21,17 @@ def did_it_hit():
     hit = [True, False]
     return random.choice(hit)
 
+def hit_the_opponent(attacker, opponent):
+    if did_it_hit():
+        opponent = carry_damage(attacker, opponent)
+        if opponent:
+            return opponent
+        else:
+            return None
+    else:
+        print("You missed, sucker!")
+        return False
+
 # def random_damage(min_damage, max_damage):
 #     return random.randint(min_damage, max_damage)
 
@@ -30,21 +41,18 @@ def fight(board, attacker, list_of_creatures, location):
 
     if creature_index:
         opponent = list_of_creatures[creature_index]
-    else:
-        opponent = player.hero
-
-    hit = did_it_hit()
-
-    if hit:
-        opponent = carry_damage(attacker, opponent)
+        opponent = hit_the_opponent(attacker, opponent)
         if opponent:
             list_of_creatures[creature_index] = opponent
-        else:
+        elif opponent is None:
             list_of_creatures.remove(list_of_creatures[creature_index])
             board[row][col] = " "
     else:
-        print("You missed, sucker!")
-
+        opponent = player.hero
+        opponent = hit_the_opponent(attacker, opponent)
+        if opponent:
+            player.hero = opponent
+    
     return board, list_of_creatures
 
 #list_of_creatures = [{'name': 'Worm', 'health': 15, 'min_damage': 1, 'max_damage': 20, 'num_to_place': 5, 'pic': 'W', 'location': (2, 7)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 2)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (5, 5)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 5)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 3)}]

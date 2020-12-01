@@ -32,7 +32,7 @@ def direction_of_movement(key, character_coordinate):
 
 
 def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
-    enemy_icon = ["W", "D"]
+    enemy_icon = ["W", "D", "C", "L"]
     player_icon = player.hero.get("picture")
     elements_without_interaction = [" ", "#"]
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
@@ -83,7 +83,7 @@ def getting_off_the_portal(board, portal_indices, possible_coordinates):
 
 def random_creature_move(board, list_of_creatures, floor = " "):
     keybord_keys = ["W", "S", "A", "D"]
-    enemy_icons = ["W", "D", "C", "L"]
+    enemy_icons = ["W", "D"]
     player_icon = player.hero.get("picture")
     for creature in list_of_creatures:
         random_key = random.choice(keybord_keys)
