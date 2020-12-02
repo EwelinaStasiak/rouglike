@@ -172,7 +172,7 @@ def choose_interaction(kind, item_name):
                                     Press I to add to inventory {item_name}
                                     Press N if you don't want to eat or collect {item_name}""")
             
-        elif kind == "Weapon" or kind == "Tool":
+        elif kind == "Weapon" or kind == "Tool" or kind == "Friend":
             choose_player = input(f"""
                             You found {item_name}. What do you want to do with it?
                                     Press I to add to inventory {item_name}

@@ -135,7 +135,7 @@ def levels_menagement(is_running=True):
 
     for board_dict in list_of_boards:
         move = 0
-        while creatures.is_it_alive() and move < 5: #Tutaj mona dać jeszcze warunek przez and
+        while creatures.is_it_alive() and move < 10: #Tutaj mona dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
             move += 1
