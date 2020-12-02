@@ -10,7 +10,7 @@ import main
 """
 
 
-def creatures():
+def create_creatures():
     worm = {'name': "Worm", 'kind': "Enemy", 'health': 2, "min_damage": 1, "max_damage": 1, "num_to_place": 5, 'pic': "W"} #128027}
     car = {'name': "Car", 'kind': "Enemy", 'health': 20, "min_damage": 5, "max_damage": 10, "num_to_place": 15, 'pic': "C"} #128663}
     lorry = {'name': "Lorry", 'kind': "Enemy", 'health': 20, "min_damage": 20, "max_damage": 50, "num_to_place": 5, 'pic': "L"} #128666}
@@ -84,7 +84,7 @@ def car_placement(board, board_indices, list_of_vehiculs):
 
 
 def enemy_pics():
-    creatures_list = creatures()
+    creatures_list = create_creatures()
     enemy_pics = []
 
     for el in creatures_list:
@@ -109,6 +109,7 @@ def create_boss():
 
 
 def put_boss_on_board(boss, board):
+    
     boss_size = 5
     how_many_rows = len(board)
     how_many_cols = len(board[0])
@@ -119,7 +120,7 @@ def put_boss_on_board(boss, board):
             #board[first_row + row][first_col + col] = boss["picture"]
             board[first_row + row][first_col + col] = boss.get("picture")
 
-    return board, [boss]
+    return board
 
 
 """
@@ -173,6 +174,9 @@ def is_it_alive():
 def print_player_info():
     print(f"Player's name : {hero['name']}     Health level : {hero['health']}")
 
+
+def print_boss_info():
+    print(f"Player's name : {boss['name']}     Health level : {boss['health']}")
 
 """
 ************************************
@@ -242,7 +246,7 @@ def fight_boss(weapon):
     global hero
     global boss
     #boss = main.board_3_dict["list_of_creatures"]
-    boss = boss[0]
+    # boss = boss[0]
 
     if weapon.get("name") == "Hen":
         boss["health"] = 0
