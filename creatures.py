@@ -18,7 +18,7 @@ def creatures():
     hen = {'name': "Hen", 'kind': "Firend", 'health': 5, "num_to_place": 1, 'pic': "H"} #128020}
     #boss = {'name': "Wyga", 'kind': "fox", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "num_to_place": 1, "picture": "F"}
 
-    return worm, car, lorry, dog, hen, boss
+    return worm, car, lorry, dog, hen, #boss
 
 
 def creatures_on_the_board_dicts(creature):
