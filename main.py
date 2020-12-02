@@ -83,13 +83,22 @@ def fill_the_bard():
         board["board"] = new_board
         board["list_of_creatures"] = new_list_of_creatures
 
+
 def screen_display(board):
     util.clear_screen()
     engine.display_board(board)
     creatures.print_player_info()
 
-def inventory_management():
-    pass
+
+def inventory_management(board_dict):
+    global board_3_dict
+    list_of_items = inventory.create_items()
+    inventory.inventory_hero = inventory.create_inventory()
+    inventory.print_inventory()
+    if board_dict == board_3_dict:
+        inventory.use_item_from_inventory(list_of_items, fight_with_boss=True)
+    else:
+        inventory.use_item_from_inventory(list_of_items)
 
 # def creatures_life(list_of_creatures):
 #     n = 1
@@ -112,7 +121,7 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
         print("You exit the game!")
         exit()
     elif key.lower() == "i":
-        inventory_management()
+        inventory_management(board_dict)
     elif key.lower() in move_keys:
         board_dict["board"], board_dict["list_of_creatures"] = tour(board_dict, key) #inventory, list_of_items
 
