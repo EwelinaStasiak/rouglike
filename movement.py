@@ -1,10 +1,7 @@
 import random
-import fight
-import interaction
 import termcolor
-import player
-import manage_boards
 import hen_talk
+import creatures
 
 
 def character_position(character_icon, board):
@@ -34,7 +31,7 @@ def direction_of_movement(key, character_coordinate):
 
 def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
     enemy_icon = ["W", "D", "C", "L"]
-    player_icon = player.hero.get("picture")
+    player_icon = creatures.hero.get("picture")
     elements_without_interaction = [" ", "#"]
     hen_icon = "H"
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
@@ -50,17 +47,17 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
     if next_position == " " or next_position == player_icon:    # next_position == player_icon zabezpieczenie jak wciśnie się coś innego niż W, S, A, D. Player zostaje w tym samym miejscu 
         board[row][col] = " "
         board[next_row][next_col] = player_icon
-        player.hero["location"] = (next_row, next_col)
+        creatures.hero["location"] = (next_row, next_col)
     
     elif (next_row, next_col) in portals_dict:
         board[row][col] = " "
         portal_indices = portals_dict[(next_row, next_col)]
         next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
         board[next_row][next_col] = player_icon
-        player.hero["location"] = (next_row, next_col)
+        creatures.hero["location"] = (next_row, next_col)
 
     elif next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
-        board, list_of_creatures = fight.fight(board, player.hero, list_of_creatures, (next_row, next_col))
+        board, list_of_creatures = creatures.fight(board, creatures.hero, list_of_creatures, (next_row, next_col))
     
     elif next_position == hen_icon:
         hen_talk.talking_to_hen(board)
@@ -68,7 +65,7 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
     elif next_position not in elements_without_interaction and next_position not in enemy_icon:
         for item in list_of_items:
             if item.get("picture") == next_position:
-                board = interaction.player_interaction(board, item, [next_row, next_col], [row, col])
+                board = inventory.player_interaction(board, item, [next_row, next_col], [row, col])
                 break
     return board, list_of_creatures
 
@@ -89,7 +86,7 @@ def getting_off_the_portal(board, portal_indices, possible_coordinates):
 def random_creature_move(board, list_of_creatures, floor = " "):
     keybord_keys = ["W", "S", "A", "D"]
     enemy_icons = ["W", "D"]
-    player_icon = player.hero.get("picture")
+    player_icon = creatures.hero.get("picture")
     for creature in list_of_creatures:
         random_key = random.choice(keybord_keys)
         row, col = creature["location"]
@@ -102,7 +99,7 @@ def random_creature_move(board, list_of_creatures, floor = " "):
             creature["location"] = (new_row, new_col)
 
         elif board[new_row][new_col] == player_icon or board[new_row][new_col] in enemy_icons:
-            board, list_of_creatures = fight.fight(board, creature, list_of_creatures, (new_row, new_col))
+            board, list_of_creatures = creatures.fight(board, creature, list_of_creatures, (new_row, new_col))
             #creature["location"] = (new_row, new_col)
     
     return board, list_of_creatures

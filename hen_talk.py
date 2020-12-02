@@ -1,9 +1,8 @@
 import util
 import os
-import first_board
-import ui
 import time
 from termcolor import colored
+import engine
 
 sent_1 = "Greetings, mighty hedgehog!"
 sent_2 = "You've been on a long and dangerous\njourney to make your dream come true."
@@ -28,6 +27,7 @@ def hen_starts_talking(board, greetings):
         ui.display_board(board)
         ui.display_board(talking_window)
         input()
+
 
 def hen_gives_a_choice(board, make_your_choice, arrow):
     sent_5, sent_6, sent_7, sent_8 = make_your_choice
@@ -58,6 +58,7 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
 
     return choice
 
+
 def dialog_window(talking_window, text):
     row = 2
     col = 3
@@ -71,14 +72,16 @@ def dialog_window(talking_window, text):
         else:
             talking_window[row][col] = el
             col += 1
-    
+
     return talking_window
-            
+
+
 def talking_to_hen(board):
     global greetings, make_your_choice, arrow
 
     hen_starts_talking(board, greetings)
     choice = hen_gives_a_choice(board, make_your_choice, arrow)
+
 
 def main():
     global greetings, make_your_choice, arrow
@@ -86,6 +89,7 @@ def main():
 
     hen_starts_talking(board, greetings)
     choice = hen_gives_a_choice(board, make_your_choice, arrow)
+
 
 if __name__ == "__main__":
     main()
