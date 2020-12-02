@@ -11,7 +11,7 @@ import creatures
 
 def create_inventory():
     global inventory_hero
-    inventory_hero = {"start": 0}
+    inventory_hero = {"Cone": 10}
     return inventory_hero
 
 
@@ -26,6 +26,7 @@ def add_to_inventory(added_items):
 
 
 def remove_from_inventory(removed_items):
+    global inventory_hero
     check_if_null = []
     for elements in removed_items:
         for key in inventory_hero:
@@ -36,6 +37,8 @@ def remove_from_inventory(removed_items):
             check_if_null.append(key)
     for elements in check_if_null:
         inventory_hero.pop(elements)
+    return inventory_hero
+    
 
 
 def print_inventory():  # if user press "I"
@@ -48,34 +51,35 @@ def print_inventory():  # if user press "I"
     print(20*"-")
 
 
-def use_item_from_inventory(list_of_items, fight_with_boss=False):
-    items_name = []
-    for item in list_of_items:
-        items_name.append(item.get("name"))
-
-    first_letter = input("Enter the first letter of the item you want to use")
+def choose_item_to_use():
+     
+    first_letter = input("Enter the first letter of the item you want to use \n")
+    item = ""
     if first_letter.lower() == "a":
-        if "Apple" in inventory_hero:
-            index_name = items_name.index("Apple")
-            remove_from_inventory("Apple")
-            eat_food(list_of_items[index_name])
-            
+        item = "Apple"
     elif first_letter.lower() == "e":
-        if "Egg" in inventory_hero:
-            index_name = items_name.index("Egg")
-            remove_from_inventory("Egg")
-            eat_food(list_of_items[index_name])
+        item = "Egg"
     elif first_letter.lower() == "c":
-        if "Cone" in inventory_hero:
-            index_name = items_name.index("Cone")
-            remove_from_inventory("Cone")
-            if fight_with_boss:
-                creatures.fight_boss(list_of_items[index_name])
+        item = "Cone"
     elif first_letter.lower() == "s":
-        pass
+        item = "Stick"
     elif first_letter.lower() == "k":
-        pass
+        item = "Key"
+    elif first_letter.lower() == "h":
+        item = "Hen"
 
+    return item
+    
+def use_item_from_inventory(list_of_items, item, fight_with_boss=False):
+    items_names = []
+    for items in list_of_items:
+        items_names.append(items.get("name"))
+    item_index = items_names.index(item)
+
+    if item == "Apple" or item == "Egg":
+        eat_food(list_of_items[item_index])
+    elif (item == "Cone" or item == "Hen") and fight_with_boss:
+        creatures.fight_boss(list_of_items[item_index])
 
 """
 *******************************
@@ -172,7 +176,7 @@ def choose_interaction(kind, item_name):
                                     Press I to add to inventory {item_name}
                                     Press N if you don't want to eat or collect {item_name}""")
             
-        elif kind == "Weapon" or kind == "Tool":
+        elif kind == "Weapon" or kind == "Tool" or kind == "Friend":
             choose_player = input(f"""
                             You found {item_name}. What do you want to do with it?
                                     Press I to add to inventory {item_name}
@@ -183,3 +187,15 @@ def choose_interaction(kind, item_name):
         else:
             print("Invalid input! Please enter the correct answer")
     return choose_player
+
+
+def main():
+    global inventory_hero
+    inventory_hero = create_inventory()
+    print_inventory()
+    list_of_items = create_items()
+    inventory_hero = use_item_from_inventory(list_of_items, fight_with_boss=True)
+    print_inventory()
+
+if __name__ == "__main__":
+    main()

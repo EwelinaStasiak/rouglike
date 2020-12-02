@@ -245,6 +245,13 @@ def creature_movement(board, list_of_creatures):
         
     
     return board, list_of_creatures
+
+
+def boss_movement():
+    pass
+
+
+
     #new_locations = []
 
     

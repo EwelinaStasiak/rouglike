@@ -38,7 +38,7 @@ def boards_generator():
     board_3_dict["available_indices"] = engine.board_all_indices(board_3_dict["board"])
 
 def creatures_to_put_dict():
-    animals = creatures.creatures()
+    animals = creatures.create_creatures()
     creatures_to_put = []
 
     for creature in animals:
@@ -56,11 +56,12 @@ def creatures_board_division():
             board_1_dict["list_of_creatures"] += creature
         elif creature_1["name"] == "Car" or creature_1["name"] == "Lorry" or creature_1["name"] == "Hen":
             board_2_dict["list_of_creatures"] += creature
-        # elif creature_1["name"] == "Wyga":
-        #     board_3_dict["list_of_creatures"] += creature
+        elif creature_1["name"] == "Fox":
+            board_3_dict["list_of_creatures"] += creature
 
 def fill_the_bard():
     global board_1_dict, board_2_dict, board_3_dict
+    
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
     list_of_items = inventory.create_items()
     items_on_board = inventory.items_on_board(list_of_items)
@@ -74,7 +75,6 @@ def fill_the_bard():
             new_board, new_list_of_creatures = creatures.car_placement(new_board, board["available_indices"], board["list_of_creatures"])            
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 2)
         elif board == board_3_dict:
-            #new_board = creatures.put_boss_on_board(board["list_of_creatures"], board["board"])
             boss = creatures.create_boss()
             new_board, new_list_of_creatures = creatures.put_boss_on_board(boss, board["board"])
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 3)
@@ -88,17 +88,21 @@ def screen_display(board):
     util.clear_screen()
     engine.display_board(board)
     creatures.print_player_info()
+    creatures.print_boss_info()
 
 
 def inventory_management(board_dict):
     global board_3_dict
+    
     list_of_items = inventory.create_items()
-    inventory.inventory_hero = inventory.create_inventory()
     inventory.print_inventory()
+    item = inventory.choose_item_to_use()
+    inventory.inventory_hero = inventory.remove_from_inventory([item])
+
     if board_dict == board_3_dict:
-        inventory.use_item_from_inventory(list_of_items, fight_with_boss=True)
+        inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=True)
     else:
-        inventory.use_item_from_inventory(list_of_items)
+        inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=False)
 
 # def creatures_life(list_of_creatures):
 #     n = 1
@@ -134,8 +138,8 @@ def levels_menagement(is_running=True):
     #list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
 
     for board_dict in list_of_boards:
-        #move = 0
-        while creatures.is_it_alive(): # and move < 5: #Tutaj mozna dać jeszcze warunek przez and
+        move = 0
+        while creatures.is_it_alive() and move < 10: #Tutaj mona dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
             #move += 1
@@ -148,6 +152,7 @@ def levels_menagement(is_running=True):
 def main():
     boards_generator()
     creatures.hero = creatures.create_player()
+    inventory.inventory_hero = inventory.create_inventory()
     creatures_board_division()
     fill_the_bard()
 
