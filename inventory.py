@@ -91,11 +91,12 @@ def create_items():
     cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 10, 'collecting' : False, 'picture' : "C"} #nie znalazłem kodu
     stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
     key = {'name' : "Key", 'kind' :"Tool", 'weight' : 1, 'num_to_place': 1,'picture' : "K"}
-    list_of_items = [apple,egg,cone,key]
+    list_of_items = [apple, egg, cone, key]
     return list_of_items
 
+
 def items_on_board(list_of_items):
-    items_on_board =[]
+    items_on_board = []
     for item in list_of_items:
         for i in range(item["num_to_place"]):
             items_on_board.append(item)
@@ -104,10 +105,11 @@ def items_on_board(list_of_items):
 
 def eat_food(food): #Tutaj brakowało parabetru hero?
     #pobieramy parametr food,bo nie tylko jabłko będzie dodawało 'życie'
-    if player.hero["health"] + food.get("value_health",0) > player.hero["max_health"]:
+    global hero
+    if hero["health"] + food.get("value_health",0) > hero["max_health"]:
         pass
-    else :
-        player.hero["health"] += food.get("value_health",0)
+    else:
+        hero["health"] += food.get("value_health",0)
     
 
 def random_items_locations(board, board_indexes, items_on_board):
@@ -129,17 +131,18 @@ def random_items_locations(board, board_indexes, items_on_board):
 *******************************
 """
 def player_interaction(board, item, position_item, position_player):
+    global hero
     kind = item.get("kind")
     choose_player = choose_interaction(kind, item.get("name"))
     if choose_player == "E":
-        items.eat_food(item)
+        eat_food(item)
         board[position_player[0]][position_player[1]] = " "
-        board[position_item[0]][position_item[1]] = player.hero.get("picture")
+        board[position_item[0]][position_item[1]] = hero.get("picture")
             
     elif choose_player == "I":
-        inventory.add_to_inventory(item)
+        add_to_inventory(item)
         board[position_player[0]][position_player[1]] = " "
-        board[position_item[0]][position_item[1]] = player.hero.get("picture")
+        board[position_item[0]][position_item[1]] = hero.get("picture")
     elif choose_player == "N":
         pass
     
