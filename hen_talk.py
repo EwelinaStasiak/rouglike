@@ -19,13 +19,14 @@ make_your_choice = [sent_5, sent_6, sent_7, sent_8]
 greetings = [sent_1, sent_2, sent_2_1, sent_3, sent_4]
 
 
+
 def hen_starts_talking(board, greetings):
     for sent in greetings:
-        talking_window = first_board.create_board(8, 81, " ", "#", "#")
+        talking_window = engine.create_board(8, 81, " ", "#", "#")
         os.system("cls | clear")
         dialog_window(talking_window, sent)
-        ui.display_board(board)
-        ui.display_board(talking_window)
+        engine.display_board(board)
+        engine.display_board(talking_window)
         input()
 
 
@@ -40,8 +41,8 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
 
     while user_input != '\r':
         os.system("cls | clear")
-        ui.display_board(board)
-        talking_window = first_board.create_board(8, 81, " ", "#", "#")
+        engine.display_board(board)
+        talking_window = engine.create_board(8, 81, " ", "#", "#")
         if user_input.lower() in up_down_keys:
             if num_of_moves == 0:
                 talking_window = dialog_window(talking_window, choice_2)
@@ -51,9 +52,9 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
                 talking_window = dialog_window(talking_window, choice_1)
                 choice = "Continue"
                 num_of_moves = 0
-            ui.display_board(talking_window)
+            engine.display_board(talking_window)
         else:
-            ui.display_board(dialog_window(talking_window, choice_1))
+            engine.display_board(dialog_window(talking_window, choice_1))
         user_input = util.key_pressed()
 
     return choice
@@ -85,7 +86,7 @@ def talking_to_hen(board):
 
 def main():
     global greetings, make_your_choice, arrow
-    board = first_board.create_board(41, 81, " ", "#", "#")
+    board = engine.create_board(41, 81, " ", "#", "#")
 
     hen_starts_talking(board, greetings)
     choice = hen_gives_a_choice(board, make_your_choice, arrow)
