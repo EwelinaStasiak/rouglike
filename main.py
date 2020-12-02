@@ -63,18 +63,22 @@ def fill_the_bard():
     global board_1_dict, board_2_dict, board_3_dict
     
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
+    list_of_items = inventory.create_items()
+    items_on_board = inventory.items_on_board(list_of_items)
 
     for board in list_of_boards:
         new_board = creatures.put_player_on_board(board["board"])
         if board == board_1_dict:
             new_board, new_list_of_creatures = creatures.random_creatures_locations(new_board, board["available_indices"], board["list_of_creatures"])
+            new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 1)
         elif board == board_2_dict:
-            new_board, new_list_of_creatures = creatures.car_placement(new_board, board["available_indices"], board["list_of_creatures"])
+            new_board, new_list_of_creatures = creatures.car_placement(new_board, board["available_indices"], board["list_of_creatures"])            
+            new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 2)
         elif board == board_3_dict:
             boss = creatures.create_boss()
-            #new_board = creatures.put_boss_on_board(board["list_of_creatures"], board["board"])
-            new_board = creatures.put_boss_on_board(boss, board["board"])
-            
+            new_board, new_list_of_creatures = creatures.put_boss_on_board(boss, board["board"])
+            new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 3)
+        #new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,board)
         #Wstawianie itemów do zbierania
         board["board"] = new_board
         board["list_of_creatures"] = new_list_of_creatures
@@ -135,7 +139,7 @@ def levels_menagement(is_running=True):
 
     for board_dict in list_of_boards:
         move = 0
-        while creatures.is_it_alive() and move < 5: #Tutaj mona dać jeszcze warunek przez and
+        while creatures.is_it_alive() and move < 10: #Tutaj mona dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
             move += 1

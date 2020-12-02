@@ -89,11 +89,11 @@ def use_item_from_inventory(list_of_items, item, fight_with_boss=False):
 
 
 def create_items():
-    apple = {'name' : "Apple", 'kind' : "Food", 'value_health' : 2, 'num_to_place': 10, 'collecting' : True, 'duration' : 60, 'picture' : "A"} # collecting - czy przedmiot podnosi się autoamtycznie, czy użytkownik musi wyrazić zgodę
+    apple = {'name' : "Apple", 'kind' : "Food", 'value_health' : 2, 'num_to_place': 5, 'collecting' : True, 'duration' : 60, 'picture' : "A"} # collecting - czy przedmiot podnosi się autoamtycznie, czy użytkownik musi wyrazić zgodę
     #wormy_apple = {'name' : "Wormy Apple", 'kind' : "Food", 'value_healt' : 2, 'worm': True, 'collecting' : True, 'duration' :60, 'picture' : "Y"}
     egg = {'name' : "Egg", 'kind' : "Food", 'value_healt' : 5, 'collecting' : True, 'num_to_place': 2, 'picture' : "E"}
-    cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 10, 'collecting' : False, 'picture' : "C"} #nie znalazłem kodu
-    stick = {'name' :"Stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
+    cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 5, 'collecting' : False, 'picture' : "C"} #nie znalazłem kodu
+    stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
     key = {'name' : "Key", 'kind' :"Tool", 'weight' : 1, 'num_to_place': 1,'picture' : "K"}
     list_of_items = [apple, egg, cone, key]
     return list_of_items
@@ -116,17 +116,29 @@ def eat_food(food): #Tutaj brakowało parabetru hero?
         hero["health"] += food.get("value_health",0)
     
 
-def random_items_locations(board, board_indexes, items_on_board):
+def random_items_locations(new_board, board_indexes, items_on_board,num_board):
     floor = " "
+    road_rows = [14,15,16,17,18,19,20,21]
+    boss_rows = [35,36,37,38,39]
+    road_width = 6
+    boss_high = 5
     for item in items_on_board:
         value = False
         while value is False:
             row_index, col_index = random.choice(board_indexes)
-            if board[row_index][col_index] == floor:
-                board[row_index][col_index] = item.get("picture")
+            
+            if num_board == 2:
+                if row_index in road_rows:
+                    row_index = row_index + road_width
+            elif num_board == 3:
+                if row_index in boss_rows :
+                    row_index = row_index - boss_high
+
+            if new_board[row_index][col_index] == floor:
+                new_board[row_index][col_index] = item.get("picture")
                 value = True
 
-    return board
+    return new_board
 
 
 """
@@ -164,7 +176,7 @@ def choose_interaction(kind, item_name):
                                     Press I to add to inventory {item_name}
                                     Press N if you don't want to eat or collect {item_name}""")
             
-        elif kind == "Weapon" or kind == "Tool":
+        elif kind == "Weapon" or kind == "Tool" or kind == "Friend":
             choose_player = input(f"""
                             You found {item_name}. What do you want to do with it?
                                     Press I to add to inventory {item_name}

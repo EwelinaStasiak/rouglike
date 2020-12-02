@@ -15,10 +15,10 @@ def create_creatures():
     car = {'name': "Car", 'kind': "Enemy", 'health': 20, "min_damage": 5, "max_damage": 10, "num_to_place": 15, 'pic': "C"} #128663}
     lorry = {'name': "Lorry", 'kind': "Enemy", 'health': 20, "min_damage": 20, "max_damage": 50, "num_to_place": 5, 'pic': "L"} #128666}
     dog = {'name': "Dog", 'kind': "Enemy", 'health': 20, "min_damage": 1, "max_damage": 5, "num_to_place": 5, 'pic': "D"} #128021}
-    hen = {'name': "Hen", 'kind': "Firend", 'health': 5, "num_to_place": 1, 'pic': "H"} #128020}
+    hen = {'name': "Hen", 'kind': "Friend", 'health': 5, "num_to_place": 1, 'pic': "H"} #128020}
     #boss = {'name': "Wyga", 'kind': "fox", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "num_to_place": 1, "picture": "F"}
 
-    return worm, car, lorry, dog, hen  #, boss
+    return worm, car, lorry, dog, hen, #boss
 
 
 def creatures_on_the_board_dicts(creature):
