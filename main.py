@@ -2,7 +2,7 @@ import creatures
 import util
 import movement
 import engine
-import display_information
+
 
 board_1_dict = {
     "board" : [],
