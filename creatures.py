@@ -18,7 +18,7 @@ def creatures():
     hen = {'name': "Hen", 'kind': "Firend", 'health': 5, "num_to_place": 1, 'pic': "H"} #128020}
     #boss = {'name': "Wyga", 'kind': "fox", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "num_to_place": 1, "picture": "F"}
 
-    return worm, car, lorry, dog, hen, boss
+    return worm, car, lorry, dog, hen#, boss
 
 
 def creatures_on_the_board_dicts(creature):
@@ -180,6 +180,28 @@ def print_player_info():
 ************************************
 """
 
+def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_position, row, col, player_icon, vehiculs_icon = ["C", "L"]):
+    global hero
+    above_road_boarder = 13
+    current_row, current_col = current_possition
+
+    if obstacle == "vehiculs":
+        board[current_row][current_col] = obstacles_dict["empty_space"]
+        board[above_road_boarder][current_col] = hero["picture"]
+        hero["location"] = (above_road_boarder, current_col)
+    
+    return board
+
+# def car_accident(board, obstacle, current_possition, vehiculs_icon):
+#     global hero
+#     row, col = current_possition
+#     above_road_boarder = 13
+#     if obstacle in vehiculs_icon:
+#         board[row][col] = " "
+#         board[above_road_boarder][col] = hero["picture"]
+#         hero["location"] = (above_road_boarder, col)
+    
+#     return board
 
 def who_is_the_oponent(list_of_creatures, location):
     for creature in list_of_creatures:
@@ -226,7 +248,7 @@ def fight(board, attacker, list_of_creatures, location):
         opponent = hit_the_opponent(attacker, opponent)
         if opponent:
             list_of_creatures[creature_index] = opponent
-        elif opponent is None:
+        elif opponent is None and opponent != hero:
             list_of_creatures.remove(list_of_creatures[creature_index])
             board[row][col] = " "
     else:

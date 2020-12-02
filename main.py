@@ -114,15 +114,15 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
 
 def levels_menagement(is_running=True):
     global board_1_dict, board_2_dict, board_3_dict
-    #list_of_boards = [board_2_dict, board_3_dict]
-    list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
+    list_of_boards = [board_2_dict, board_3_dict]
+    #list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
 
     for board_dict in list_of_boards:
-        move = 0
-        while creatures.is_it_alive() and move < 5: #Tutaj mona dać jeszcze warunek przez and
+        #move = 0
+        while creatures.is_it_alive(): # and move < 5: #Tutaj mozna dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
-            move += 1
+            #move += 1
 
         if not creatures.is_it_alive():
             # display_information.print_end_game()

@@ -19,7 +19,6 @@ make_your_choice = [sent_5, sent_6, sent_7, sent_8]
 greetings = [sent_1, sent_2, sent_2_1, sent_3, sent_4]
 
 
-
 def hen_starts_talking(board, greetings):
     for sent in greetings:
         talking_window = engine.create_board(8, 81, " ", "#", "#")
@@ -38,6 +37,9 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
 
     choice_1 = sent_5 + "\n" + arrow + sent_6 + "\n" + "\t" + sent_7 + "\n" + sent_8
     choice_2 = sent_5 + "\n" + "\t" + sent_6 + "\n" + arrow + sent_7 + "\n" + sent_8
+    
+    user_choice = choice_1
+    choice = "Continue"
 
     while user_input != '\r':
         os.system("cls | clear")
@@ -45,16 +47,20 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
         talking_window = engine.create_board(8, 81, " ", "#", "#")
         if user_input.lower() in up_down_keys:
             if num_of_moves == 0:
-                talking_window = dialog_window(talking_window, choice_2)
+                #talking_window = dialog_window(talking_window, choice_2)
+                user_choice = choice_2
                 choice = "Abandon"
                 num_of_moves += 1
             else:
-                talking_window = dialog_window(talking_window, choice_1)
+                #talking_window = dialog_window(talking_window, choice_1)
+                user_choice = choice_1
                 choice = "Continue"
                 num_of_moves = 0
-            engine.display_board(talking_window)
-        else:
-            engine.display_board(dialog_window(talking_window, choice_1))
+            #engine.display_board(talking_window)
+        # else:
+        #     engine.display_board(dialog_window(talking_window, choice_1))
+        talking_window = dialog_window(talking_window, user_choice)
+        engine.display_board(dialog_window(talking_window, user_choice))
         user_input = util.key_pressed()
 
     return choice
@@ -81,7 +87,7 @@ def talking_to_hen(board):
     global greetings, make_your_choice, arrow
 
     hen_starts_talking(board, greetings)
-    choice = hen_gives_a_choice(board, make_your_choice, arrow)
+    return hen_gives_a_choice(board, make_your_choice, arrow)
 
 
 def main():

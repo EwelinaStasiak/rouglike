@@ -18,56 +18,155 @@ def direction_of_movement(key, character_coordinate):
     col = character_coordinate[1]
     
     if key.upper() == "W":
-        return [row - 1, col]
+        return (row - 1, col)
     elif key.upper() == "S":
-        return [row + 1, col]
+        return (row + 1, col)
     elif key.upper() == "A":
-        return [row, col - 1]
+        return (row, col - 1)
     elif key.upper() == "D":
-        return [row, col + 1]
+        return (row, col + 1)
     else:
-        return [row, col]
+        return (row, col)
+
+def identify_obstacle(obstacle, obstacles_dict):
+    for key, value in obstacles_dict.items():
+        if obstacle == value or obstacle in value:
+            return key
+
+    return False
 
 
-def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
-    enemy_icon = ["W", "D", "C", "L"]
-    player_icon = creatures.hero.get("picture")
-    elements_without_interaction = [" ", "#"]
-    hen_icon = "H"
-    portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
+def move_to_empty_space(board, current_row, current_col, next_row, next_col, obstacles_dict, player_icon):
+    board[current_row][current_col] = obstacles_dict["empty_space"]
+    board[next_row][next_col] = player_icon
+    creatures.hero["location"] = (next_row, next_col)
 
-    row, col = character_position(player_icon, board)
+    return board
 
-    next_row, next_col = direction_of_movement(key, (row, col))
-    #next_player_coordinate = direction_of_movement(key, player_coordinate)
-    #next_row = next_player_coordinate[0] # Moze to tak skrócić, by było bardziej czytelne?
-    #next_col = next_player_coordinate[1]
-    next_position = board[next_row][next_col]
+
+def bumps_on_vehicul(board, obstacle, obstacles_dict, list_of_creatures, current_position, next_position):
+    current_row, current_col = current_position
+    vehicul_index = creatures.who_is_the_oponent(list_of_creatures, next_position)
+    board, list_of_creatures = creatures.fight(board, list_of_creatures[vehicul_index], list_of_creatures, (current_row, current_col))
+    board = creatures.car_crash(board, obstacle, current_position, obstacles_dict)
+
+    return board
+
+
+def obstacle_move(board, key, obstacle, obstacles_dict, current_position, next_position, list_of_creatures, player_icon):
+    current_row, current_col = current_position
+    next_row, next_col = next_position
+    new_row, new_col = direction_of_movement(key, (next_row, next_col))
+    new_obstacle = identify_obstacle(board[new_row][new_col], obstacles_dict)
     
-    if next_position == " " or next_position == player_icon:    # next_position == player_icon zabezpieczenie jak wciśnie się coś innego niż W, S, A, D. Player zostaje w tym samym miejscu 
-        board[row][col] = " "
-        board[next_row][next_col] = player_icon
-        creatures.hero["location"] = (next_row, next_col)
-    
-    elif (next_row, next_col) in portals_dict:
-        board[row][col] = " "
-        portal_indices = portals_dict[(next_row, next_col)]
-        next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
-        board[next_row][next_col] = player_icon
-        creatures.hero["location"] = (next_row, next_col)
-
-    elif next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
+    if obstacle == "enemies":
         board, list_of_creatures = creatures.fight(board, creatures.hero, list_of_creatures, (next_row, next_col))
-    
-    elif next_position == hen_icon:
-        hen_talk.talking_to_hen(board)
+    elif new_obstacle == "vehiculs":
+        board = bumps_on_vehicul(board, new_obstacle, obstacles_dict, list_of_creatures, current_position, (new_row, new_col))
+    elif obstacle == "empty_space" or obstacle == "player_icon":
+        move_to_empty_space(board, current_row, current_col, next_row, next_col, obstacles_dict, player_icon)
+    elif obstacle == "road":
+        if new_obstacle == "empty_space":
+            move_to_empty_space(board, current_row, current_col, new_row, new_col, obstacles_dict, player_icon)
+        else:
+            board = bumps_on_vehicul(board, new_obstacle, obstacles_dict, list_of_creatures, current_position, (new_row, new_col))
+    elif obstacle == "friends":
+        choice = hen_talk.talking_to_hen(board)
+    elif obstacle == "vehiculs":
+        bumps_on_vehicul(board, obstacle, obstacles_dict, list_of_creatures, current_position, next_position)
 
-    elif next_position not in elements_without_interaction and next_position not in enemy_icon:
+    return board, list_of_creatures
+
+
+def moveing_through_portals(board, current_position, obstacles_dict, next_position, possible_coordinates, portals_dict, player_icon):
+    current_row, current_col = current_position
+    board[current_row][current_col] = obstacles_dict["empty_space"]
+    portal_indices = portals_dict[next_position]
+    next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
+    board[next_row][next_col] = player_icon
+    creatures.hero["location"] = (next_row, next_col)
+
+    return board
+
+
+def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates):
+    obstacles_dict = {"empty_space" : " ", "wall" : "#", "friends" : "H", "enemies" : ["W", "D"], "vehiculs" : ["C", "L"], "road" : "–", "portals" : portals_dict, "player_icon" : "@"}
+    player_icon = obstacles_dict["player_icon"]
+    current_position = character_position(player_icon, board)
+    next_position = direction_of_movement(key, current_position)
+    next_row, next_col = next_position
+    obstacle = identify_obstacle(board[next_row][next_col], obstacles_dict)
+
+    if obstacle == "wall":
+        board[current_position[0]][current_position[1]] = player_icon
+    elif obstacle:
+        board, list_of_creatures = obstacle_move(board,key, obstacle, obstacles_dict, current_position, next_position, list_of_creatures, player_icon)
+    elif next_position in portals_dict:
+        board = moveing_through_portals(board, current_position, obstacles_dict, next_position, possible_coordinates, portals_dict, player_icon)
+    else:
         for item in list_of_items:
             if item.get("picture") == next_position:
-                board = inventory.player_interaction(board, item, [next_row, next_col], [row, col])
+                board = inventory.player_interaction(board, item, next_position, current_position)
                 break
+
     return board, list_of_creatures
+
+# def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
+#     enemy_icon = ["W", "D"] #"C", "L"
+#     vehiculs_icons = ["C", "L"]
+#     player_icon = creatures.hero.get("picture")
+#     road_line = "–"
+#     elements_without_interaction = [" ", "#", road_line]
+#     hen_icon = "H"
+#     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
+#     row, col = character_position(player_icon, board)
+
+#     next_row, next_col = direction_of_movement(key, (row, col))
+#     next_row_2, next_col_2 = direction_of_movement(key, (next_row, next_col))
+#     #next_player_coordinate = direction_of_movement(key, player_coordinate)
+#     #next_row = next_player_coordinate[0] # Moze to tak skrócić, by było bardziej czytelne?
+#     #next_col = next_player_coordinate[1]
+#     next_position = board[next_row][next_col]
+
+#     if next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
+#         board, list_of_creatures = creatures.fight(board, creatures.hero, list_of_creatures, (next_row, next_col))
+
+#     elif board[next_row_2][next_col_2] in vehiculs_icons:
+#         vehicul_index = creatures.who_is_the_oponent(list_of_creatures, (next_row_2, next_col_2))
+#         board, list_of_creatures = creatures.fight(board, list_of_creatures[vehicul_index], list_of_creatures, (row, col))
+#         board = creatures.car_accident(board, board[next_row_2][next_col_2], (row, col), vehiculs_icons)
+
+#     elif next_position == " " or next_position == player_icon:    # next_position == player_icon zabezpieczenie jak wciśnie się coś innego niż W, S, A, D. Player zostaje w tym samym miejscu 
+#         board[row][col] = " "
+#         board[next_row][next_col] = player_icon
+#         creatures.hero["location"] = (next_row, next_col)
+    
+#     elif (next_row, next_col) in portals_dict:
+#         board[row][col] = " "
+#         portal_indices = portals_dict[(next_row, next_col)]
+#         next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
+#         board[next_row][next_col] = player_icon
+#         creatures.hero["location"] = (next_row, next_col)
+
+#     elif next_position == hen_icon:
+#         choice = hen_talk.talking_to_hen(board)
+
+#     elif next_position not in elements_without_interaction and next_position not in enemy_icon:
+#         for item in list_of_items:
+#             if item.get("picture") == next_position:
+#                 board = inventory.player_interaction(board, item, [next_row, next_col], [row, col])
+#                 break
+#     elif next_position == road_line:
+#         board[row][col] = " "
+#         next_row, next_col = direction_of_movement(key, (next_row, next_col))
+#         if board[next_row][next_col] not in vehiculs_icons:
+#             board[next_row][next_col] = player_icon
+#             creatures.hero["location"] = (next_row, next_col)
+#         else:
+#             vehicul_index = creatures.who_is_the_oponent(list_of_creatures, (next_row_2, next_col_2))
+#             board, list_of_creatures = creatures.fight(board, list_of_creatures[vehicul_index], list_of_creatures, (row, col))
+#             board = creatures.car_accident(board, board[next_row_2][next_col_2], (row, col), vehiculs_icons)
+#     return board, list_of_creatures
 
 
 def getting_off_the_portal(board, portal_indices, possible_coordinates):
@@ -105,6 +204,8 @@ def random_creature_move(board, list_of_creatures, floor = " "):
     return board, list_of_creatures
 
 def car_movement(board, list_of_vehiculs):
+    player_icon = creatures.hero.get("picture")
+    above_road_row = 13
     floor = " "
     min_col = 1
     max_col = 79
@@ -112,13 +213,14 @@ def car_movement(board, list_of_vehiculs):
     for vehicul in list_of_vehiculs:
         row, col = vehicul["location"]
         kind = vehicul["name"]
-
         if kind == "Car":
             board[row][col] = floor
             if col == min_col:
                 new_col = max_col
             else:
                 new_col = col - 1
+                # if board[row][new_col] == player_icon:
+                #     board[above_road_row][new_col]
             board[row][new_col] = vehicul["pic"]
         elif kind == "Lorry":
             board[row][col : col + 2] = [floor] * 2
@@ -126,6 +228,8 @@ def car_movement(board, list_of_vehiculs):
                 new_col = max_col - 1
             else:
                 new_col = col - 1
+                # if board[row][new_col] == player_icon:
+                #     board[above_road_row][new_col]
             board[row][new_col : new_col+2] = [vehicul["pic"]] * 2
 
         vehicul["location"] = (row, new_col)
