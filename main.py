@@ -30,6 +30,7 @@ board_3_dict = {
     "list_of_items" : []
 } 
 
+
 def boards_generator():
     global board_1_dict, board_2_dict, board_3_dict
 
@@ -37,6 +38,7 @@ def boards_generator():
     board_2_dict["board"], board_2_dict["available_indices"] = engine.sec_board(engine.create_board(41, 81, " ", "#", "#"))
     board_3_dict["board"] = engine.create_board(41, 81, " ", "#", "#")
     board_3_dict["available_indices"] = engine.board_all_indices(board_3_dict["board"])
+
 
 def creatures_to_put_dict():
     animals = creatures.create_creatures()
@@ -91,12 +93,12 @@ def screen_display(board):
     util.clear_screen()
     engine.display_board(board)
     creatures.print_player_info()
-    creatures.print_boss_info()
+    
 
 
 def inventory_management(board_dict):
     global board_3_dict
-    
+
     list_of_items = inventory.create_items()
     inventory.print_inventory()
     use_item = input("Do you want use item? \n Enter Y(yes) or N(no) \n")
@@ -151,20 +153,20 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
 
 def levels_menagement(is_running=True):
     global board_1_dict, board_2_dict, board_3_dict
-    #list_of_boards = [board_2_dict, board_3_dict]
+    # list_of_boards = [board_3_dict]
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
     level = 1
     for board_dict in list_of_boards:
         level_rules_managment(level)
         util.clear_screen()
-        move = 0
-        while creatures.is_it_alive() and move < 5: #Tutaj mona dać jeszcze warunek przez and
+        
+        is_alive = True
+        while is_alive: #Tutaj mona dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
-            move += 1
+            is_alive = creatures.is_it_alive()
         level += 1
-        if not creatures.is_it_alive():
-            # display_information.print_end_game()
+        if not is_alive:
             exit()
 
 

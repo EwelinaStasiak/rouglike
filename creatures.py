@@ -174,9 +174,6 @@ def print_player_info():
     print(f"Player's name : {hero['name']}     Health level : {hero['health']}")
 
 
-def print_boss_info():
-    print(f"Player's name : {boss['name']}     Health level : {boss['health']}")
-
 """
 ************************************
             FIGHT
@@ -263,28 +260,30 @@ def fight(board, attacker, list_of_creatures, location):
     return board, list_of_creatures
 
 
-def fight_boss(weapon):
+def fight_boss(weapon=None):
     global hero
     global boss
     #boss = main.board_3_dict["list_of_creatures"]
     # boss = boss[0]
-
-    if weapon.get("name") == "Hen":
-        boss["health"] = 0
-
-    elif weapon.get("name") == "Cone":
-        hit_fox = did_it_hit()
-        if hit_fox:
-            boss = carry_damage(hero, boss)
-        else:
-            stone = stone_throw()
-            hit_hero = did_it_hit()
-            if stone and hit_hero:
-                hero["health"] -= boss["max_damage"]
-            elif hit_hero:
-                hero = carry_damage(boss, hero)
-    elif weapon == "close":
+    if weapon == None:
         hero["health"] = 0
+        print("The fox ate you!")
+    else:
+        if weapon.get("name") == "Hen":
+            boss["health"] = 0
+
+        elif weapon.get("name") == "Cone":
+            hit_fox = did_it_hit()
+            if hit_fox:
+                boss = carry_damage(hero, boss)
+            else:
+                stone = stone_throw()
+                hit_hero = did_it_hit()
+                if stone and hit_hero:
+                    hero["health"] -= boss["max_damage"]
+                elif hit_hero:
+                    hero = carry_damage(boss, hero)
+    
 
     win = win_the_game(boss["health"])
     if win:

@@ -38,7 +38,6 @@ def remove_from_inventory(removed_items):
     for elements in check_if_null:
         inventory_hero.pop(elements)
     return inventory_hero
-    
 
 
 def print_inventory():  # if user press "I"
@@ -96,7 +95,7 @@ def create_items():
     #wormy_apple = {'name' : "Wormy Apple", 'kind' : "Food", 'value_healt' : 2, 'worm': True, 'collecting' : True, 'duration' :60, 'picture' : "Y"}
     egg = {'name' : "Egg", 'kind' : "Food", 'value_healt' : 5, 'collecting' : True, 'num_to_place': 2, 'picture' : "E"}
     cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 5, 'collecting' : False, 'picture' : "V"} #nie znalazłem kodu
-    stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
+    #stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
     key = {'name' : "Key", 'kind' :"Tool", 'weight' : 1, 'num_to_place': 1,'picture' : "K"}
     list_of_items = [apple, egg, cone, key]
     return list_of_items

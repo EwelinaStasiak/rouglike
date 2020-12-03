@@ -75,6 +75,8 @@ def obstacle_move(board, key, obstacle, obstacles_dict, current_position, next_p
         choice = hen_talk.talking_to_hen(board)
     elif obstacle == "vehiculs":
         bumps_on_vehicul(board, obstacle, obstacles_dict, list_of_creatures, current_position, next_position)
+    elif obstacle == "boss":
+        creatures.fight_boss()
 
     return board, list_of_creatures
 
@@ -91,7 +93,7 @@ def moveing_through_portals(board, current_position, obstacles_dict, next_positi
 
 
 def player_move(board, key, list_of_creatures, inventory_hero, list_of_items, portals_dict, possible_coordinates):
-    obstacles_dict = {"empty_space" : " ", "wall" : "#", "friends" : "H", "enemies" : ["W", "D"], "vehiculs" : ["C", "L"], "road" : "–", "portals" : portals_dict, "player_icon" : "@"}
+    obstacles_dict = {"empty_space" : " ", "wall" : "#", "friends" : "H", "enemies" : ["W", "D"], "vehiculs" : ["C", "L"], "road" : "–", "portals" : portals_dict, "player_icon" : "@", "boss": "F"}
     player_icon = obstacles_dict["player_icon"]
     current_position = character_position(player_icon, board)
     next_position = direction_of_movement(key, current_position)
