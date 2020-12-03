@@ -81,7 +81,7 @@ def fill_the_bard():
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 2)
         elif board == board_3_dict:
             boss = creatures.create_boss()
-            new_list_of_creatures = boss
+            new_list_of_creatures = [boss]
             new_board = creatures.put_boss_on_board(boss, board["board"])  #, new_list_of_creatures
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 3)
         #new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,board)
@@ -154,7 +154,7 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
 
 def levels_menagement(is_running=True):
     global board_1_dict, board_2_dict, board_3_dict
-    # list_of_boards = [board_3_dict]
+    #list_of_boards = [board_3_dict]
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
     is_alive = True
     level = 1
