@@ -155,13 +155,13 @@ def levels_menagement(is_running=True):
     global board_1_dict, board_2_dict, board_3_dict
     # list_of_boards = [board_3_dict]
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
+    is_alive = True
     level = 1
     for board_dict in list_of_boards:
         level_rules_managment(level)
         util.clear_screen()
-        
-        is_alive = True
-        while is_alive: #Tutaj mona dać jeszcze warunek przez and
+        inventory.inventory_hero["Key"] = 0
+        while is_alive and inventory.inventory_hero["Key"] == 0: #Tutaj mona dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
             is_alive = creatures.is_it_alive()
