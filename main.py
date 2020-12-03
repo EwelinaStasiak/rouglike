@@ -3,6 +3,7 @@ import util
 import movement
 import engine
 import inventory
+import display_information
 
 
 board_1_dict = {
@@ -46,6 +47,7 @@ def creatures_to_put_dict():
     
     return creatures_to_put
 
+
 def creatures_board_division():
     global board_1_dict, board_2_dict, board_3_dict
     creatures_to_put = creatures_to_put_dict()
@@ -58,6 +60,7 @@ def creatures_board_division():
             board_2_dict["list_of_creatures"] += creature
         elif creature_1["name"] == "Fox":
             board_3_dict["list_of_creatures"] += creature
+
 
 def fill_the_bard():
     global board_1_dict, board_2_dict, board_3_dict
@@ -112,6 +115,17 @@ def inventory_management(board_dict):
 #         print(f"{creature['name']} no {n}. hp: {creature['health']}")
 
 
+def level_rules_managment(level):
+    util.clear_screen()
+    print(f"{level} level game.")
+    if level == 1:
+        display_information.first_board_rules()
+    elif level == 2:
+        display_information.second_board_rules()
+    else:
+        display_information.third_board_rules()
+
+
 def tour(board_dict, key, inventory=[], list_of_items=[]):
     #creatures_life(board_dict["list_of_creatures"])
     board, list_of_creatures = movement.player_move(board_dict["board"], key, board_dict["list_of_creatures"], inventory, list_of_items, board_dict["portals_dict"], board_dict["available_indices"])
@@ -139,21 +153,23 @@ def levels_menagement(is_running=True):
     global board_1_dict, board_2_dict, board_3_dict
     #list_of_boards = [board_2_dict, board_3_dict]
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
-
     for board_dict in list_of_boards:
+        level_rules_managment(level)
+        util.clear_screen()
         move = 0
         inventory.inventory_hero["Key"] = 0
         while creatures.is_it_alive() and inventory.inventory_hero["Key"] == 0: #Tutaj mona dać jeszcze warunek przez and
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
-            #move += 1
-
+            move += 1
+        level += 1
         if not creatures.is_it_alive():
             # display_information.print_end_game()
             exit()
 
 
 def main():
+    display_information.start_game()
     boards_generator()
     creatures.hero = creatures.create_player()
     inventory.inventory_hero = inventory.create_inventory()
