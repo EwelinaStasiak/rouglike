@@ -11,7 +11,7 @@ import creatures
 
 def create_inventory():
     global inventory_hero
-    inventory_hero = {"Cone": 10}
+    inventory_hero = {"Cone": 10, "Key" : 0}
     return inventory_hero
 
 
@@ -96,11 +96,10 @@ def create_items():
     #wormy_apple = {'name' : "Wormy Apple", 'kind' : "Food", 'value_healt' : 2, 'worm': True, 'collecting' : True, 'duration' :60, 'picture' : "Y"}
     egg = {'name' : "Egg", 'kind' : "Food", 'value_healt' : 5, 'collecting' : True, 'num_to_place': 2, 'picture' : "E"}
     cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 5, 'collecting' : False, 'picture' : "V"} #nie znalazłem kodu
-    stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
+    #stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
     key = {'name' : "Key", 'kind' :"Tool", 'weight' : 1, 'num_to_place': 1,'picture' : "K"}
     list_of_items = [apple, egg, cone, key]
     return list_of_items
-
 
 def items_on_board(list_of_items):
     items_on_board = []
@@ -108,7 +107,6 @@ def items_on_board(list_of_items):
         for i in range(item["num_to_place"]):
             items_on_board.append(item)
     return items_on_board
-
 
 def eat_food(food): #Tutaj brakowało parabetru hero?
     #pobieramy parametr food,bo nie tylko jabłko będzie dodawało 'życie'
@@ -119,13 +117,16 @@ def eat_food(food): #Tutaj brakowało parabetru hero?
     else:
         creatures.hero["health"] += food.get("value_health",0)
     
-
 def random_items_locations(new_board, board_indexes, items_on_board,num_board):
     floor = " "
     road_rows = [14,15,16,17,18,19,20,21]
     boss_rows = [35,36,37,38,39]
     road_width = 6
     boss_high = 5
+    if num_board == 3:
+        for item in items_on_board:
+            if item.get("name") == "Key":
+                items_on_board.remove(item)
     for item in items_on_board:
         value = False
         while value is False:
@@ -141,7 +142,6 @@ def random_items_locations(new_board, board_indexes, items_on_board,num_board):
             if new_board[row_index][col_index] == floor:
                 new_board[row_index][col_index] = item.get("picture")
                 value = True
-
     return new_board
 
 
