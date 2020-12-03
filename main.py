@@ -76,7 +76,7 @@ def fill_the_bard():
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 2)
         elif board == board_3_dict:
             boss = creatures.create_boss()
-            new_board, new_list_of_creatures = creatures.put_boss_on_board(boss, board["board"])
+            new_board = creatures.put_boss_on_board(boss, board["board"])  #, new_list_of_creatures
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 3)
         #new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,board)
         #Wstawianie itemów do zbierania
@@ -96,13 +96,15 @@ def inventory_management(board_dict):
     
     list_of_items = inventory.create_items()
     inventory.print_inventory()
-    item = inventory.choose_item_to_use()
-    inventory.inventory_hero = inventory.remove_from_inventory([item])
+    use_item = input("Do you want use item? \n Enter Y(yes) or N(no) \n")
+    if use_item.upper() == "Y":
+        item = inventory.choose_item_to_use()
+        inventory.inventory_hero = inventory.remove_from_inventory([item])
 
-    if board_dict == board_3_dict:
-        inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=True)
-    else:
-        inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=False)
+        if board_dict == board_3_dict:
+            inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=True)
+        else:
+            inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=False)
 
 # def creatures_life(list_of_creatures):
 #     n = 1
@@ -127,7 +129,8 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
     elif key.lower() == "i":
         inventory_management(board_dict)
     elif key.lower() in move_keys:
-        board_dict["board"], board_dict["list_of_creatures"] = tour(board_dict, key) #inventory, list_of_items
+        list_of_items = inventory.create_items()
+        board_dict["board"], board_dict["list_of_creatures"] = tour(board_dict, key, inventory.inventory_hero, list_of_items) #inventory, list_of_items
 
     return board_dict
 

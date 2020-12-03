@@ -1,6 +1,6 @@
 import random
 import display_information
-import main
+
 
 
 """

@@ -67,6 +67,8 @@ def choose_item_to_use():
         item = "Key"
     elif first_letter.lower() == "h":
         item = "Hen"
+    else:
+        item = None
 
     return item
     
@@ -80,6 +82,7 @@ def use_item_from_inventory(list_of_items, item, fight_with_boss=False):
         eat_food(list_of_items[item_index])
     elif (item == "Cone" or item == "Hen") and fight_with_boss:
         creatures.fight_boss(list_of_items[item_index])
+    
 
 """
 *******************************
@@ -92,7 +95,7 @@ def create_items():
     apple = {'name' : "Apple", 'kind' : "Food", 'value_health' : 2, 'num_to_place': 5, 'collecting' : True, 'duration' : 60, 'picture' : "A"} # collecting - czy przedmiot podnosi się autoamtycznie, czy użytkownik musi wyrazić zgodę
     #wormy_apple = {'name' : "Wormy Apple", 'kind' : "Food", 'value_healt' : 2, 'worm': True, 'collecting' : True, 'duration' :60, 'picture' : "Y"}
     egg = {'name' : "Egg", 'kind' : "Food", 'value_healt' : 5, 'collecting' : True, 'num_to_place': 2, 'picture' : "E"}
-    cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 5, 'collecting' : False, 'picture' : "C"} #nie znalazłem kodu
+    cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 5, 'collecting' : False, 'picture' : "V"} #nie znalazłem kodu
     stick = {'name' :"stick", 'kind' : "Tool", 'weight' : 2, 'collecting' : False, 'picture' : "S"} #hokejowy;)
     key = {'name' : "Key", 'kind' :"Tool", 'weight' : 1, 'num_to_place': 1,'picture' : "K"}
     list_of_items = [apple, egg, cone, key]
@@ -109,11 +112,12 @@ def items_on_board(list_of_items):
 
 def eat_food(food): #Tutaj brakowało parabetru hero?
     #pobieramy parametr food,bo nie tylko jabłko będzie dodawało 'życie'
-    global hero
-    if hero["health"] + food.get("value_health",0) > hero["max_health"]:
+    # global hero
+    # hero = creatures.hero
+    if creatures.hero["health"] + food.get("value_health",0) > creatures.hero["max_health"]:
         pass
     else:
-        hero["health"] += food.get("value_health",0)
+        creatures.hero["health"] += food.get("value_health",0)
     
 
 def random_items_locations(new_board, board_indexes, items_on_board,num_board):
@@ -131,7 +135,7 @@ def random_items_locations(new_board, board_indexes, items_on_board,num_board):
                 if row_index in road_rows:
                     row_index = row_index + road_width
             elif num_board == 3:
-                if row_index in boss_rows :
+                if row_index in boss_rows:
                     row_index = row_index - boss_high
 
             if new_board[row_index][col_index] == floor:
@@ -147,19 +151,19 @@ def random_items_locations(new_board, board_indexes, items_on_board,num_board):
 *******************************
 """
 def player_interaction(board, item, position_item, position_player):
-    global hero
+    # global hero
     kind = item.get("kind")
     choose_player = choose_interaction(kind, item.get("name"))
-    if choose_player == "E":
+    if choose_player.upper() == "E":
         eat_food(item)
         board[position_player[0]][position_player[1]] = " "
-        board[position_item[0]][position_item[1]] = hero.get("picture")
+        board[position_item[0]][position_item[1]] = creatures.hero.get("picture")
             
-    elif choose_player == "I":
-        add_to_inventory(item)
+    elif choose_player.upper() == "I":
+        add_to_inventory([item.get("name")])
         board[position_player[0]][position_player[1]] = " "
-        board[position_item[0]][position_item[1]] = hero.get("picture")
-    elif choose_player == "N":
+        board[position_item[0]][position_item[1]] = creatures.hero.get("picture")
+    elif choose_player.upper() == "N":
         pass
     
     return board
@@ -174,15 +178,15 @@ def choose_interaction(kind, item_name):
                             You found {item_name}. What do you want to do with it?
                                     Press E to eat {item_name}
                                     Press I to add to inventory {item_name}
-                                    Press N if you don't want to eat or collect {item_name}""")
+                                    Press N if you don't want to eat or collect {item_name} \n""")
             
         elif kind == "Weapon" or kind == "Tool" or kind == "Friend":
             choose_player = input(f"""
                             You found {item_name}. What do you want to do with it?
                                     Press I to add to inventory {item_name}
-                                    Press N if you don't want to eat or collect {item_name}""")
+                                    Press N if you don't want to eat or collect {item_name} \n""")
         
-        if choose_player in correct_answer:
+        if choose_player.upper() in correct_answer:
             is_invalid = False
         else:
             print("Invalid input! Please enter the correct answer")

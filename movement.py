@@ -2,6 +2,7 @@ import random
 import termcolor
 import hen_talk
 import creatures
+import inventory
 
 
 def character_position(character_icon, board):
@@ -89,7 +90,7 @@ def moveing_through_portals(board, current_position, obstacles_dict, next_positi
     return board
 
 
-def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates):
+def player_move(board, key, list_of_creatures, inventory_hero, list_of_items, portals_dict, possible_coordinates):
     obstacles_dict = {"empty_space" : " ", "wall" : "#", "friends" : "H", "enemies" : ["W", "D"], "vehiculs" : ["C", "L"], "road" : "–", "portals" : portals_dict, "player_icon" : "@"}
     player_icon = obstacles_dict["player_icon"]
     current_position = character_position(player_icon, board)
@@ -105,7 +106,7 @@ def player_move(board, key, list_of_creatures, inventory, list_of_items, portals
         board = moveing_through_portals(board, current_position, obstacles_dict, next_position, possible_coordinates, portals_dict, player_icon)
     else:
         for item in list_of_items:
-            if item.get("picture") == next_position:
+            if item.get("picture") == board[next_row][next_col]:
                 board = inventory.player_interaction(board, item, next_position, current_position)
                 break
 
