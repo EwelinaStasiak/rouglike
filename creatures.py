@@ -166,13 +166,15 @@ def put_player_on_board(board):
 
     global hero
     player_icon = hero.get("picture")
+    n = 0
 
     for row in range(len(board) - 1):
         for col in range(len(board[row]) - 1):
-            if board[row][col] == "#" and board[row + 1][col] == "#" and board[row][col + 1] == "#":
+            if board[row][col] == "#" and board[row + 1][col] == "#" and board[row][col + 1] == "#" and n != 1:
                 player_start_row = row + 1
                 player_start_col = col + 2
                 board[player_start_row][player_start_col] = player_icon
+                n += 1
 
     return board
 
