@@ -167,8 +167,8 @@ def put_player_on_board(board):
     global hero
     player_icon = hero.get("picture")
 
-    for row in range(len(board)):
-        for col in range(len(board[row])):
+    for row in range(len(board) - 1):
+        for col in range(len(board[row]) - 1):
             if board[row][col] == "#" and board[row + 1][col] == "#" and board[row][col + 1] == "#":
                 player_start_row = row + 1
                 player_start_col = col + 2

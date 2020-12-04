@@ -107,7 +107,7 @@ def create_items():
 
     apple = {'name': "Apple", 'kind': "Food", 'value_health': 2, 'num_to_place': 5, 'collecting': True, 'duration': 60, 'picture': "A"} 
     egg = {'name': "Egg", 'kind': "Food", 'value_healt': 5, 'collecting': True, 'num_to_place': 2, 'picture': "E"}
-    cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place:': 5, 'collecting': False, 'picture': "V"}
+    cone = {'name' : "Cone", 'kind' : "Weapon", 'weight' : 1, 'num_to_place': 5, 'collecting': False, 'picture': "V"}
     key = {'name': "Key", 'kind':"Tool", 'weight': 1, 'num_to_place': 1,'picture': "K"}
 
     list_of_items = [apple, egg, cone, key]

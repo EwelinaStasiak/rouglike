@@ -219,7 +219,7 @@ def random_creature_move(board, list_of_creatures, floor = " "):
 
 def car_movement(board, list_of_vehiculs):
 
-    # player_icon = creatures.hero.get("picture")  wyświetliło że nieużywane
+    #player_icon = creatures.hero.get("picture")  #wyświetliło że nieużywane
     # above_road_row = 13  wyświetliło że nieużywane
     floor = " "
     min_col = 1
@@ -228,6 +228,7 @@ def car_movement(board, list_of_vehiculs):
     for vehicul in list_of_vehiculs:
         row, col = vehicul["location"]
         kind = vehicul["name"]
+        
         if kind == "Car":
             board[row][col] = floor
             if col == min_col:
