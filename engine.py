@@ -156,18 +156,9 @@ Board_2
 def sec_board(board):
 
     road_banch = [14,18, 22]
-    # road_strips = ["–", "–"]
 
     for index in road_banch:
         board[index][1: 80] = ["–"] * 79
-
-
-    # midle_road_index = 1
-
-    # while midle_road_index < 78:
-    #     for el in road_strips:
-    #         board[18][midle_road_index: midle_road_index + 2] = [el] * 2
-    #         midle_road_index += 2
 
     return board, board_all_indices(board)
 

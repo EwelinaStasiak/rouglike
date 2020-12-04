@@ -128,64 +128,6 @@ def player_move(board, key, list_of_creatures, inventory_hero, list_of_items, po
 
     return board, list_of_creatures
 
-# def player_move(board, key, list_of_creatures, inventory, list_of_items, portals_dict, possible_coordinates): #Parametr z lokacją wrogów
-#     enemy_icon = ["W", "D"] #"C", "L"
-#     vehiculs_icons = ["C", "L"]
-#     player_icon = creatures.hero.get("picture")
-#     road_line = "–"
-#     elements_without_interaction = [" ", "#", road_line]
-#     hen_icon = "H"
-#     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
-#     row, col = character_position(player_icon, board)
-
-#     next_row, next_col = direction_of_movement(key, (row, col))
-#     next_row_2, next_col_2 = direction_of_movement(key, (next_row, next_col))
-#     #next_player_coordinate = direction_of_movement(key, player_coordinate)
-#     #next_row = next_player_coordinate[0] # Moze to tak skrócić, by było bardziej czytelne?
-#     #next_col = next_player_coordinate[1]
-#     next_position = board[next_row][next_col]
-
-#     if next_position in enemy_icon:   # pętla na wypadek natrafienia na wroga
-#         board, list_of_creatures = creatures.fight(board, creatures.hero, list_of_creatures, (next_row, next_col))
-
-#     elif board[next_row_2][next_col_2] in vehiculs_icons:
-#         vehicul_index = creatures.who_is_the_oponent(list_of_creatures, (next_row_2, next_col_2))
-#         board, list_of_creatures = creatures.fight(board, list_of_creatures[vehicul_index], list_of_creatures, (row, col))
-#         board = creatures.car_accident(board, board[next_row_2][next_col_2], (row, col), vehiculs_icons)
-
-#     elif next_position == " " or next_position == player_icon:    # next_position == player_icon zabezpieczenie jak wciśnie się coś innego niż W, S, A, D. Player zostaje w tym samym miejscu 
-#         board[row][col] = " "
-#         board[next_row][next_col] = player_icon
-#         creatures.hero["location"] = (next_row, next_col)
-    
-#     elif (next_row, next_col) in portals_dict:
-#         board[row][col] = " "
-#         portal_indices = portals_dict[(next_row, next_col)]
-#         next_row, next_col = getting_off_the_portal(board, portal_indices, possible_coordinates)
-#         board[next_row][next_col] = player_icon
-#         creatures.hero["location"] = (next_row, next_col)
-
-#     elif next_position == hen_icon:
-#         choice = hen_talk.talking_to_hen(board)
-
-#     elif next_position not in elements_without_interaction and next_position not in enemy_icon:
-#         for item in list_of_items:
-#             if item.get("picture") == next_position:
-#                 board = inventory.player_interaction(board, item, [next_row, next_col], [row, col])
-#                 break
-#     elif next_position == road_line:
-#         board[row][col] = " "
-#         next_row, next_col = direction_of_movement(key, (next_row, next_col))
-#         if board[next_row][next_col] not in vehiculs_icons:
-#             board[next_row][next_col] = player_icon
-#             creatures.hero["location"] = (next_row, next_col)
-#         else:
-#             vehicul_index = creatures.who_is_the_oponent(list_of_creatures, (next_row_2, next_col_2))
-#             board, list_of_creatures = creatures.fight(board, list_of_creatures[vehicul_index], list_of_creatures, (row, col))
-#             board = creatures.car_accident(board, board[next_row_2][next_col_2], (row, col), vehiculs_icons)
-#     return board, list_of_creatures
-
-
 def getting_off_the_portal(board, portal_indices, possible_coordinates):
 
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
@@ -219,15 +161,11 @@ def random_creature_move(board, list_of_creatures, floor = " "):
 
         elif board[new_row][new_col] == player_icon or board[new_row][new_col] in enemy_icons:
             board, list_of_creatures = creatures.fight(board, creature, list_of_creatures, (new_row, new_col))
-            #creature["location"] = (new_row, new_col)
 
     return board, list_of_creatures
 
 
 def car_movement(board, list_of_vehiculs):
-
-    #player_icon = creatures.hero.get("picture")  #wyświetliło że nieużywane
-    # above_road_row = 13  wyświetliło że nieużywane
     floor = " "
     min_col = 1
     max_col = 79
@@ -242,8 +180,6 @@ def car_movement(board, list_of_vehiculs):
                 new_col = max_col
             else:
                 new_col = col - 1
-                # if board[row][new_col] == player_icon:
-                #     board[above_road_row][new_col]
             board[row][new_col] = vehicul["pic"]
         elif kind == "Lorry":
             board[row][col: col + 2] = [floor] * 2
@@ -251,8 +187,6 @@ def car_movement(board, list_of_vehiculs):
                 new_col = max_col - 1
             else:
                 new_col = col - 1
-                # if board[row][new_col] == player_icon:
-                #     board[above_road_row][new_col]
             board[row][new_col: new_col+2] = [vehicul["pic"]] * 2
             vehicul["location_2"] = (row, new_col + 1)
 
@@ -291,47 +225,15 @@ def boss_movement(board, list_of_creatures):
             for col in range(movement):
                 board[first_row + row][first_col + col] = " "
                 board[first_row + row][last_col + (col + 1)] = boss.get("picture")
-                # if board[first_row + row][last_col + (col + 1)] == " ":
-                #     board[first_row + row][first_col + col] = " "
-                #     board[first_row + row][last_col + (col + 1)] = boss.get("picture") 
-                # else:
-                #     creatures.fight_boss()
-                #     display_information.print_end_game()
-                #     exit()
                                               
     else:
         for row in range(boss.get("size")):
             for col in range(boss.get("size")):
                 board[first_row + row][first_col + col] = " "
-                # if board[first_row + row][first_col + col] == " ":
-                #     board[first_row + row][first_col + col] = " "
-                # else:
-                #     creatures.fight_boss()
-                #     display_information.print_end_game()
-                #     exit()
-                    
-                # board[lenght_board - (boss.get("size") + 1) + row][start_col_boss + col]
+
         creatures.put_boss_on_board(boss, board)
         
     return board, list_of_creatures
 
-
-    #new_locations = []
-
-    
-
-# def fight(character_1, character_2_health, min_damage = 1, max_damage = 2):
-#     did_I_miss = random.choice([True, False])
-#     if not did_I_miss():
-#         damage = random.randint(min_damage, max_damage)
-#         character_2_health -= damage
-    
-#     return character_2_health
-
-# def did_it_die(character_health):
-#     if character_health <= 0:
-#         return True
-#     else:
-#         return False
 
 

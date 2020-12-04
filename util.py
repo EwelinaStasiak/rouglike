@@ -9,10 +9,8 @@ def key_pressed():
         import termios
     except ImportError:
         try:
-            # probably Windows
             import msvcrt
         except ImportError:
-            # FIXME what to do on other platforms?
             raise ImportError('getch not available')
         else:
             key = msvcrt.getch().decode('utf-8')

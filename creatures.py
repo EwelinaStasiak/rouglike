@@ -64,9 +64,8 @@ def non_road_coordinates(board_indices, road_rows):
 def car_placement(board, board_indices, list_of_vehiculs):
 
     vehiculs_to_place = len(list_of_vehiculs)
-    # vehicul_types = ["Car", "Lorry"] wyświetlało że zmiena nie jest używana
     road_rows = [15, 16, 17, 19, 20, 21]
-    # empty = " "  wyświetlało że zmiena nie jest używana
+    empty = " "
     non_road_indices = non_road_coordinates(board_indices, road_rows)
     min_col = 1
     max_col = 78
@@ -76,7 +75,7 @@ def car_placement(board, board_indices, list_of_vehiculs):
         col_index = random.randint(min_col, max_col)
         vehicul = list_of_vehiculs[vehiculs_to_place - 1]
 
-        if board[row_index][col_index] == " " and board[row_index][col_index + 2] == " ":
+        if board[row_index][col_index] == empty and board[row_index][col_index + 2] == empty:
             vehicul = list_of_vehiculs[vehiculs_to_place - 1]
             if vehicul["name"] == "Lorry":
                 board[row_index][col_index: col_index + 2] = [vehicul["pic"]] * 2
@@ -117,7 +116,6 @@ def create_boss():
 
     return boss
 
-
 def put_boss_on_board(boss, board):
 
     list_of_creatures = [boss]
@@ -132,6 +130,10 @@ def put_boss_on_board(boss, board):
 
     return board, list_of_creatures
 
+def print_boss_info():
+    global boss
+
+    print(colored(f"Boss's name : {boss['name']}        Health level : {boss['health']}", "blue"))
 
 """
 ************************************
@@ -167,15 +169,16 @@ def put_player_on_board(board):
 
     global hero
     player_icon = hero.get("picture")
-    n = 0
+    wall = "#"
+    hero_num = 0
 
     for row in range(len(board) - 1):
         for col in range(len(board[row]) - 1):
-            if board[row][col] == "#" and board[row + 1][col] == "#" and board[row][col + 1] == "#" and n != 1:
+            if board[row][col] == wall and board[row + 1][col] == wall and board[row][col + 1] == wall and hero_num != 1:
                 player_start_row = row + 1
                 player_start_col = col + 2
                 board[player_start_row][player_start_col] = player_icon
-                n += 1
+                hero_num += 1
 
     return board
 
@@ -200,7 +203,7 @@ def print_player_info():
 """
 
 
-def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_position, row, col, player_icon, vehiculs_icon = ["C", "L"]):
+def car_crash(board, obstacle, current_possition, obstacles_dict):
 
     global hero
     above_road_boarder = 13
@@ -212,17 +215,6 @@ def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_
         hero["location"] = (above_road_boarder, current_col)
 
     return board
-
-# def car_accident(board, obstacle, current_possition, vehiculs_icon):
-#     global hero
-#     row, col = current_possition
-#     above_road_boarder = 13
-#     if obstacle in vehiculs_icon:
-#         board[row][col] = " "
-#         board[above_road_boarder][col] = hero["picture"]
-#         hero["location"] = (above_road_boarder, col)
-    
-#     return board
 
 
 def who_is_the_oponent(list_of_creatures, location):
@@ -255,10 +247,7 @@ def hit_the_opponent(attacker, opponent):
 
     if did_it_hit():
         opponent = carry_damage(attacker, opponent)
-        if opponent:
-            return opponent
-        else:
-            return None
+        return opponent if opponent else None
     else:
         print(colored("You missed, sucker!", "blue"))
         return False
@@ -295,24 +284,21 @@ def fight_boss(weapon=None):
     if weapon == None:
         hero["health"] = 0
         print(colored("The fox ate you!", "blue"))
-    else:
-        if weapon == "Hen":
-            boss["health"] = 0
+    
+    elif weapon == "Hen":
+        boss["health"] = 0
 
-        elif weapon.get("name") == "Cone":
-            hit_fox = did_it_hit()
-            if hit_fox:
-                boss = carry_damage(hero, boss)
-            else:
-                stone = stone_throw()
-                hit_hero = did_it_hit()
-                if stone and hit_hero:
-                    hero["health"] -= boss["max_damage"]
-                elif hit_hero:
-                    hero = carry_damage(boss, hero)
+    elif weapon.get("name") == "Cone":
+        if did_it_hit():
+            boss = carry_damage(hero, boss)
+        else:
+            hit_hero = did_it_hit()
+            if stone_throw() and hit_hero:
+                hero["health"] -= boss["max_damage"]
+            elif hit_hero:
+                hero = carry_damage(boss, hero)
 
-    win = win_the_game(boss["health"])
-    if win:
+    if win_the_game(boss["health"]):
         exit()
 
     return boss
@@ -331,52 +317,3 @@ def win_the_game(boss_health):
         return True
     else:
         return False
-
-
-#list_of_creatures = [{'name': 'Worm', 'health': 15, 'min_damage': 1, 'max_damage': 20, 'num_to_place': 5, 'pic': 'W', 'location': (2, 7)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 2)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (5, 5)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 5)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 3)}]
-#location =(2, 7)
-
-# def main():
-#     board_list = [["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", "@", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", " ", " ", " ", " ", " ", " ", " ", " ", "#"],
-#     ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]]
-    
-#     #worm_1, worm_2, worm_3, worm_4, worm_5 = list_of_creatures
-    
-#     board_index = gen_boards.board_indexes(board_list)
-#     worm, car, lory, dog, hen = creatures()
-#     list_of_creatures = creatures_on_the_board_dicts(worm)
-#     board, list_of_creatures = random_creatures_locations(board_list, board_index, list_of_creatures)
-#     ui.display_board(board_list)
-
-
-
-
-
-# def random_creatures_locations(board, board_indexes, list_of_creatures):
-#     floor = " "
-#     creatures_locations = []
-    
-#     while creatures_number > 0:
-#         row_index, col_index = random.choice(board_indexes)
-#         if board[row_index][col_index] == floor:
-#             board[row_index][col_index] = creature_icon
-#             creatures_locations.append((row_index, col_index))
-#             creatures_number -= 1
-
-#     return board, creatures_locations
-
-# def random_damage(min_damage, max_damage):
-#     return random.randint(min_damage, max_damage)
-
-
-# if __name__ == "__main__":
-    
-#     main()

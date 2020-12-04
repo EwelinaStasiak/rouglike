@@ -2,6 +2,7 @@ import random
 import creatures
 from termcolor import colored
 
+inventory_hero = {}
 
 """
 *******************************
@@ -40,7 +41,7 @@ def remove_from_inventory(removed_items):
                 inventory_hero[key] -= 1
 
     for key, value in inventory_hero.items():
-        if value <= 0:
+        if value <= 0 and key != "Key":
             check_if_null.append(key)
 
     for elements in check_if_null:
@@ -49,8 +50,7 @@ def remove_from_inventory(removed_items):
     return inventory_hero
 
 
-def print_inventory():  # if user press "I"
-    #do porawy inteligentne formatowanie zależne od długości najdłuższego key w inventory
+def print_inventory():
     print(20*"-")
     print("{:>12} | {:<5}".format("item", "count"))
     print(20*"-")
@@ -62,7 +62,12 @@ def print_inventory():  # if user press "I"
 
 def choose_item_to_use():
 
-    first_letter = input(colored("Enter the first letter of the item you want to use \n", "blue"))
+    list_of_letters = ["a", "e", "c", "k", "h"]
+    first_letter = ""
+
+    while first_letter not in list_of_letters:
+        first_letter = input(colored("Enter the first letter of the item you want to use \n", "blue"))
+    
     item = ""
 
     if first_letter.lower() == "a":
@@ -71,8 +76,6 @@ def choose_item_to_use():
         item = "Egg"
     elif first_letter.lower() == "c":
         item = "Cone"
-    elif first_letter.lower() == "s":
-        item = "Stick"
     elif first_letter.lower() == "k":
         item = "Key"
     elif first_letter.lower() == "h":
@@ -223,15 +226,3 @@ def choose_interaction(kind, item_name):
             print(colored("Invalid input! Please enter the correct answer", "red"))
 
     return choose_player
-
-
-# def main():
-#     global inventory_hero
-#     inventory_hero = create_inventory()
-#     print_inventory()
-#     list_of_items = create_items()
-#     inventory_hero = use_item_from_inventory(list_of_items, fight_with_boss=True)
-#     print_inventory()
-
-# if __name__ == "__main__":
-#     main()

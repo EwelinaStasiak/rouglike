@@ -1,6 +1,5 @@
 import util
 import os
-# import time  wyświetliło że nieużywane
 from termcolor import colored 
 import engine
 
@@ -50,18 +49,13 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
         talking_window = engine.create_board(8, 81, " ", "#", "#")
         if user_input.lower() in up_down_keys:
             if num_of_moves == 0:
-                #talking_window = dialog_window(talking_window, choice_2)
                 user_choice = choice_2
                 choice = "Abandon"
                 num_of_moves += 1
             else:
-                #talking_window = dialog_window(talking_window, choice_1)
                 user_choice = choice_1
                 choice = "Continue"
                 num_of_moves = 0
-            #engine.display_board(talking_window)
-        # else:
-        #     engine.display_board(dialog_window(talking_window, choice_1))
         talking_window = dialog_window(talking_window, user_choice)
         engine.display_board(dialog_window(talking_window, user_choice))
         user_input = util.key_pressed()

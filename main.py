@@ -86,19 +86,21 @@ def fill_the_bard():
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 2)
         elif board == board_3_dict:
             boss = creatures.create_boss()
-            new_board, new_list_of_creatures = creatures.put_boss_on_board(boss, board["board"])  #, new_list_of_creatures
+            new_board, new_list_of_creatures = creatures.put_boss_on_board(boss, board["board"])
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 3)
-        #new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,board)
-        #Wstawianie itemów do zbierania
         board["board"] = new_board
         board["list_of_creatures"] = new_list_of_creatures
 
 
 def screen_display(board):
 
+    global board_3_dict
+
     util.clear_screen()
     engine.display_board(board)
     creatures.print_player_info()
+    if board_3_dict["board"] == board:
+        creatures.print_boss_info()
 
 
 def inventory_management(board_dict):
@@ -118,11 +120,6 @@ def inventory_management(board_dict):
         else:
             inventory.use_item_from_inventory(list_of_items, item, fight_with_boss=False)
 
-# def creatures_life(list_of_creatures):
-#     n = 1
-#     for creature in list_of_creatures:
-#         print(f"{creature['name']} no {n}. hp: {creature['health']}")
-
 
 def level_rules_managment(level):
 
@@ -138,7 +135,6 @@ def level_rules_managment(level):
 
 def tour(board_dict, key, inventory=[], list_of_items=[]):
 
-    #creatures_life(board_dict["list_of_creatures"])
     board, list_of_creatures = movement.player_move(board_dict["board"], key, board_dict["list_of_creatures"], inventory, list_of_items, board_dict["portals_dict"], board_dict["available_indices"])
     board, list_of_creatures = movement.creature_movement(board_dict["board"], board_dict["list_of_creatures"])
 
@@ -161,20 +157,18 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
     return board_dict
 
 
-def levels_menagement(is_running=True):
+def levels_menagement():
 
     global board_1_dict, board_2_dict, board_3_dict
-    list_of_boards = [board_2_dict]
-    #list_of_boards = [board_3_dict]
-    #list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
+    list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
     is_alive = True
     level = 1
 
     for board_dict in list_of_boards:
         level_rules_managment(level)
         util.clear_screen()
-        inventory.inventory_hero["Key"] = 0
-        while is_alive and inventory.inventory_hero["Key"] == 0: #Tutaj mona dać jeszcze warunek przez and
+        inventory.inventory_hero["Key"] = 0 
+        while is_alive and inventory.inventory_hero.get("Key") == 0:
             screen_display(board_dict["board"])
             board_dict = key_management(board_dict)
             is_alive = creatures.is_it_alive()
@@ -184,7 +178,7 @@ def levels_menagement(is_running=True):
 
 
 def main():
-    
+
     display_information.start_game()
     boards_generator()
     creatures.hero = creatures.create_player()
@@ -197,8 +191,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#print(first_board.print_a_board(board_1_dict["board"]))
-#print(first_board.print_a_board(board_2_dict["board"]))
-#print(first_board.print_a_board(board_3_dict["board"]))
-#moving_cars.cars_in_the_move(board_2_dict["board"], board_2_dict["list_of_creatures"])
