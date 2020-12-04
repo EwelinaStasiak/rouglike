@@ -206,17 +206,15 @@ PRINT
 
 def display_board(board):
 
-    enemy = ["W", "C", "L", "D", "F"]
-    items = ["A", "E", "V", "K"]
-
     for row in board:
         for el in row:
-            if el in enemy:
-                print(termcolor.colored(el, "red"), end="")
-            elif el in items:
-                print(termcolor.colored(el, "magenta"), end="")
+            if el == "K":
+                print(termcolor.colored(el, "yellow"), end="")
             elif el == "@":
                 print(termcolor.colored(el, "cyan"), end="")
+            elif el == "H":
+                print(termcolor.colored(el, "green"), end="")
+            
             else:
                 print(el, end="")
         print()

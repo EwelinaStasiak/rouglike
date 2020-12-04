@@ -159,7 +159,7 @@ def create_player():
             hero = {'name': "Mikolaj", 'species': "Invisible hedgehog", 'health': 5, 'max_load': 5, 'skill': "invisible", "max_health": 25, "min_damage" : 10, "max_damage" : 25, "picture": "@"}    
             invalid = False
         else:
-            print(colored("Choose 1, 2 or 3", "blue"))
+            print(colored("Choose 1, 2 or 3", "cyan"))
     return hero
 
 

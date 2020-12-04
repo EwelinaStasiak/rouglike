@@ -12,7 +12,7 @@ def choose_hero():
     1. Hedgehog Mikolaj 
     2. Magic hedgehog Mikolaj 
     3. Invisible hedgehog Mikolaj \n
-    """, "blue"))
+    """, "yellow"))
 
 
 def win_screen():
@@ -23,7 +23,7 @@ def win_screen():
         `||||||||||_,__o                     |\_/|,,_____,~~`
                                     You win! (.".)~~     )`~
                                               \o/\ /---~\\ ~
-                                                _//    _// ~}""", "blue"))
+                                                _//    _// ~}""", "yellow"))
 
 
 def print_end_game():
@@ -41,7 +41,7 @@ def print_end_game():
     
     Unfortunately, your hero lost his life
 
-    ''', "blue"))
+    ''', "yellow"))
 
 
 def name_game():
@@ -97,7 +97,7 @@ def start_story():
                         |||||||||||' .\      
                         `||||||||||_,__o    
                    
-                        """, "blue"))
+                        """, "yellow"))
 
     press_enter()
 
@@ -110,7 +110,7 @@ def rules_game():
     3. Find the key (K) to go to the next level.
     4. To use an item from your inventory press I.
     5. Move keys: W, S, A, D.
-     """, "blue"))
+     """, "yellow"))
 
     press_enter()
 
@@ -122,7 +122,7 @@ def first_board_rules():
     2. You can move between chambers using portals (O).
     3. Collect useful items - apple (A), egg(E), cone (V).
     4. Remember to find the key.
-    """, "blue"))
+    """, "yellow"))
 
     press_enter()   
 
@@ -134,7 +134,7 @@ def second_board_rules():
     2. Find a friendly hen (H), maybe she can help.
     3. Collect useful items - apple (A), egg(E), cone (V).
     4. Remember to find the key.
-    """, "blue"))
+    """, "yellow"))
     press_enter()
 
 
@@ -144,7 +144,7 @@ def third_board_rules():
     1. Watch out for the fox(F).
     2. Collect useful items - apple (A), egg(E), cone (V).
     3. Use the cones to fight the fox.
-    """, "blue"))
+    """, "yellow"))
 
     press_enter()
 
