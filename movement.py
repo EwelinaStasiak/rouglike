@@ -1,5 +1,5 @@
 import random
-# import termcolor wyświetliło że nieużywane
+import termcolor #wyświetliło że nieużywane
 import hen_talk
 import creatures
 import inventory
@@ -182,16 +182,17 @@ def player_move(board, key, list_of_creatures, inventory_hero, list_of_items, po
 
 def getting_off_the_portal(board, portal_indices, possible_coordinates):
 
+    portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
     next_indices = ()
     row, col = portal_indices
 
-    if (row + 1, col) in possible_coordinates and board[row + 1][col] != "#":
+    if (row + 1, col) in possible_coordinates and board[row + 1][col] != "#" and board[row + 1][col] not in portals:
         return (row + 1, col)
-    elif (row - 1, col) in possible_coordinates and board[row - 1][col] != "#":
+    elif (row - 1, col) in possible_coordinates and board[row - 1][col] != "#" and board[row - 1][col] not in portals:
         return (row - 1, col)
-    elif (row, col + 1) in possible_coordinates and board[row][col + 1] != "#":
+    elif (row, col + 1) in possible_coordinates and board[row][col + 1] != "#" and board[row][col + 1] not in portals:
         return (row, col + 1)
-    elif (row, col - 1) in possible_coordinates and board[row][col - 1] != "#":
+    elif (row, col - 1) in possible_coordinates and board[row][col - 1] != "#" and board[row][col - 1] not in portals:
         return (row, col - 1)
 
 def random_creature_move(board, list_of_creatures, floor = " "):
