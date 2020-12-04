@@ -86,15 +86,17 @@ def choose_item_to_use():
 def use_item_from_inventory(list_of_items, item, fight_with_boss=False):
 
     items_names = []
-
-    for items in list_of_items:
-        items_names.append(items.get("name"))
-    item_index = items_names.index(item)
+    if item != "Hen":
+        for items in list_of_items:
+            items_names.append(items.get("name"))
+        item_index = items_names.index(item)
 
     if item == "Apple" or item == "Egg":
         eat_food(list_of_items[item_index])
-    elif (item == "Cone" or item == "Hen") and fight_with_boss:
+    elif item == "Cone" and fight_with_boss:
         creatures.fight_boss(list_of_items[item_index])
+    elif item == "Hen" and fight_with_boss:
+        creatures.fight_boss(item)
 
 
 """

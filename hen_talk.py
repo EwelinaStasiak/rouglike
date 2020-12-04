@@ -5,16 +5,16 @@ from termcolor import colored
 import engine
 
 
-sent_1 = colored("Greetings, mighty hedgehog!", "blue")
-sent_2 = colored("You've been on a long and dangerous\njourney to make your dream come true.", "blue")
-sent_2_1 = colored("But beware!", "blue")
-sent_3 = colored("There's still darkness lingering around your BELOVED APPLE.", "blue")
-sent_4 = colored("You will have to choose between facing your deepest fears\nor abandoning your desires... and (probably) your life.", "blue")
-sent_5 = colored("Make your choice wisely!", "blue")
-sent_6 = colored("1. I will continue! Only the PERFECT APPLE can save my soule. ", "yellow")
-sent_7 = colored("2. You're right! I will not take that much of the rist. ", "yellow")
-sent_8 = colored("\t   I still have family to take care of. ", "yellow")
-arrow = colored("–>  ", "yellow")
+sent_1 = "Greetings, mighty hedgehog!"
+sent_2 = "You've been on a long and dangerous\njourney to make your dream come true."
+sent_2_1 = "But beware!"
+sent_3 = "There's still darkness lingering around your BELOVED APPLE."
+sent_4 = "You will have to choose between facing your deepest fears\nor abandoning your desires... and (probably) your life."
+sent_5 = "Make your choice wisely!"
+sent_6 = "1. I will continue! Only the PERFECT APPLE can save my soule. "
+sent_7 = "2. You're right! I will not take that much of the rist. "
+sent_8 = "\t   I still have family to take care of. "
+arrow = "–>  "
 
 make_your_choice = [sent_5, sent_6, sent_7, sent_8]
 greetings = [sent_1, sent_2, sent_2_1, sent_3, sent_4]

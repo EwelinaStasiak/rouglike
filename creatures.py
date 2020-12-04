@@ -296,7 +296,7 @@ def fight_boss(weapon=None):
         hero["health"] = 0
         print(colored("The fox ate you!", "blue"))
     else:
-        if weapon.get("name") == "Hen":
+        if weapon == "Hen":
             boss["health"] = 0
 
         elif weapon.get("name") == "Cone":

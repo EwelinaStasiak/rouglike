@@ -79,6 +79,11 @@ def obstacle_move(board, key, obstacle, obstacles_dict, current_position, next_p
             board = bumps_on_vehicul(board, new_obstacle, obstacles_dict, list_of_creatures, current_position, (new_row, new_col))
     elif obstacle == "friends":
         choice = hen_talk.talking_to_hen(board)
+        if choice == "Continue":
+            inventory.add_to_inventory(["Hen"])
+            board[next_row][next_col] = " "
+            move_to_empty_space(board, current_row, current_col, next_row, next_col, obstacles_dict, player_icon)
+        
     elif obstacle == "vehiculs":
         bumps_on_vehicul(board, obstacle, obstacles_dict, list_of_creatures, current_position, next_position)
     elif obstacle == "boss":
