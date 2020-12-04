@@ -234,6 +234,7 @@ def car_movement(board, list_of_vehiculs):
                 # if board[row][new_col] == player_icon:
                 #     board[above_road_row][new_col]
             board[row][new_col : new_col+2] = [vehicul["pic"]] * 2
+            vehicul["location_2"] = (row, new_col + 1)
 
         vehicul["location"] = (row, new_col)
 
