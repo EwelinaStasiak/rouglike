@@ -1,5 +1,6 @@
 import random
 import creatures
+from termcolor import colored
 
 
 """
@@ -61,7 +62,7 @@ def print_inventory():  # if user press "I"
 
 def choose_item_to_use():
 
-    first_letter = input("Enter the first letter of the item you want to use \n")
+    first_letter = input(colored("Enter the first letter of the item you want to use \n", "blue"))
     item = ""
 
     if first_letter.lower() == "a":
@@ -199,22 +200,22 @@ def choose_interaction(kind, item_name):
 
     while is_invalid:
         if kind == "Food":
-            choose_player = input(f"""
+            choose_player = input(colored(f"""
                             You found {item_name}. What do you want to do with it?
                                     Press E to eat {item_name}
                                     Press I to add to inventory {item_name}
-                                    Press N if you don't want to eat or collect {item_name} \n""")
+                                    Press N if you don't want to eat or collect {item_name} \n""", "blue"))
 
         elif kind == "Weapon" or kind == "Tool" or kind == "Friend":
-            choose_player = input(f"""
+            choose_player = input(colored(f"""
                             You found {item_name}. What do you want to do with it?
                                     Press I to add to inventory {item_name}
-                                    Press N if you don't want to eat or collect {item_name} \n""")
+                                    Press N if you don't want to eat or collect {item_name} \n""", "blue"))
 
         if choose_player.upper() in correct_answer:
             is_invalid = False
         else:
-            print("Invalid input! Please enter the correct answer")
+            print(colored("Invalid input! Please enter the correct answer", "red"))
 
     return choose_player
 

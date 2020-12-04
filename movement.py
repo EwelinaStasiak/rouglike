@@ -1,5 +1,5 @@
 import random
-import termcolor #wyświetliło że nieużywane
+import termcolor
 import hen_talk
 import creatures
 import inventory

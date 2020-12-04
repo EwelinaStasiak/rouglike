@@ -1,5 +1,6 @@
 import random
 import display_information
+from termcolor import colored
 
 
 """
@@ -158,7 +159,7 @@ def create_player():
             hero = {'name': "Mikolaj", 'species': "Invisible hedgehog", 'health': 5, 'max_load': 5, 'skill': "invisible", "max_health": 25, "min_damage" : 10, "max_damage" : 25, "picture": "@"}    
             invalid = False
         else:
-            print("Choose 1, 2 or 3")
+            print(colored("Choose 1, 2 or 3", "blue"))
     return hero
 
 
@@ -189,7 +190,7 @@ def is_it_alive():
 
 def print_player_info():
 
-    print(f"Player's name : {hero['name']}     Health level : {hero['health']}")
+    print(colored(f"Player's name : {hero['name']}     Health level : {hero['health']}", "blue"))
 
 
 """
@@ -259,7 +260,7 @@ def hit_the_opponent(attacker, opponent):
         else:
             return None
     else:
-        print("You missed, sucker!")
+        print(colored("You missed, sucker!", "blue"))
         return False
 
 
@@ -293,7 +294,7 @@ def fight_boss(weapon=None):
     
     if weapon == None:
         hero["health"] = 0
-        print("The fox ate you!")
+        print(colored("The fox ate you!", "blue"))
     else:
         if weapon.get("name") == "Hen":
             boss["health"] = 0

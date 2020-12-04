@@ -3,6 +3,7 @@ import util
 import movement
 import engine
 import inventory
+from termcolor import colored
 import display_information
 
 
@@ -106,7 +107,7 @@ def inventory_management(board_dict):
 
     list_of_items = inventory.create_items()
     inventory.print_inventory()
-    use_item = input("Do you want use item? \n Enter Y(yes) or N(no) \n")
+    use_item = input(colored("Do you want use item? \n Enter Y(yes) or N(no) \n", "blue"))
 
     if use_item.upper() == "Y":
         item = inventory.choose_item_to_use()
@@ -126,7 +127,7 @@ def inventory_management(board_dict):
 def level_rules_managment(level):
 
     util.clear_screen()
-    print(f"{level} level game.")
+    print(colored(f"{level} level game.", "blue"))
     if level == 1:
         display_information.first_board_rules()
     elif level == 2:
@@ -149,7 +150,7 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
     key = util.key_pressed()
 
     if key.lower() == 'q':
-        print("You exit the game!")
+        print(colored("You exit the game!", "blue"))
         exit()
     elif key.lower() == "i":
         inventory_management(board_dict)

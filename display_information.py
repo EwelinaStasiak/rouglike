@@ -1,32 +1,33 @@
 import util
+from termcolor import colored
 
 
 def press_enter():
-    input("Press Enter to continue...")
+    input(colored("Press Enter to continue...", "cyan"))
 
 
 def choose_hero():
-    print("""
+    print(colored("""
     Choose your hero:
     1. Hedgehog Mikolaj 
     2. Magic hedgehog Mikolaj 
     3. Invisible hedgehog Mikolaj \n
-    """)
+    """, "blue"))
 
 
 def win_screen():
-    print("""
+    print(colored("""
         .|||||||||.     
         ||||||||||||| 
         |||||||||||' .\\  
         `||||||||||_,__o                     |\_/|,,_____,~~`
                                     You win! (.".)~~     )`~
                                               \o/\ /---~\\ ~
-                                                _//    _// ~}""")
+                                                _//    _// ~}""", "blue"))
 
 
 def print_end_game():
-    print('''
+    print(colored('''
         xxxxxxxxx   xxx      xxx   xxxxx 
         xxxxxxxxx   xxxx     xxx   xxx xxx
         xxx         xxxxx    xxx   xxx  xxx
@@ -40,11 +41,11 @@ def print_end_game():
     
     Unfortunately, your hero lost his life
 
-    ''')
+    ''', "blue"))
 
 
 def name_game():
-    print("""
+    print(colored("""
 
      _____ _           ______          __          _      ___              _      
     |_   _| |          | ___ \        / _|        | |    / _ \            | |     
@@ -78,13 +79,13 @@ def name_game():
                            `dooooooooobodoooooooob'
                             `doooooooob dooooooob'
                                 `"""""""' `""""""'                                                      
-                                                          """)
+                                                          """, "red"))
 
     press_enter()
 
 
 def start_story():
-    print("""
+    print(colored("""
 
     The hedgehog Mikolaj decided to go in search of the perfect apple...
     He didn't know this trip would be so dangerous.
@@ -96,54 +97,54 @@ def start_story():
                         |||||||||||' .\      
                         `||||||||||_,__o    
                    
-                        """)
+                        """, "blue"))
 
     press_enter()
 
 
 def rules_game():
-    print("""
+    print(colored("""
     Rules game:
     1. Collect apples (A) and eggs (E) to heal yourself.
     2. Collect cones (V) - they will be useful for the final fight.
     3. Find the key (K) to go to the next level.
     4. To use an item from your inventory press I.
     5. Move keys: W, S, A, D.
-     """)
+     """, "blue"))
 
     press_enter()
 
 
 def first_board_rules():
-    print("""
+    print(colored("""
     Hints:
     1. Watch out for opponents - dogs(D) and worms(W).
     2. You can move between chambers using portals (O).
     3. Collect useful items - apple (A), egg(E), cone (V).
     4. Remember to find the key.
-    """)
+    """, "blue"))
 
     press_enter()   
 
 
 def second_board_rules():
-    print("""
+    print(colored("""
     Hints:
     1. Be careful when crossing the road there are cars (C) and lorries (L) on it.
     2. Find a friendly hen (H), maybe she can help.
     3. Collect useful items - apple (A), egg(E), cone (V).
     4. Remember to find the key.
-    """)
+    """, "blue"))
     press_enter()
 
 
 def third_board_rules():
-    print("""
+    print(colored("""
     Hints:
     1. Watch out for the fox(F).
     2. Collect useful items - apple (A), egg(E), cone (V).
     3. Use the cones to fight the fox.
-    """)
+    """, "blue"))
 
     press_enter()
 
