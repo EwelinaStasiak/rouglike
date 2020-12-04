@@ -131,17 +131,20 @@ def items_on_board(list_of_items):
 
 def eat_food(food):
 
-    if creatures.hero["health"] + food.get("value_health",0) > creatures.hero["max_health"]:
-        pass
+    if creatures.hero["health"] + food.get("value_health", 0) > creatures.hero["max_health"] and creatures.hero["health"] < creatures.hero["max_health"]:
+        creatures.hero["health"] = creatures.hero["max_health"]
+    elif creatures.hero["health"] == creatures.hero["max_health"]:
+        print(colored("You have the maximum amount of health. Food will be added to your inventory", "blue"))
+        add_to_inventory([food.get("name")])
     else:
-        creatures.hero["health"] += food.get("value_health",0)
+        creatures.hero["health"] += food.get("value_health", 0)
 
 
-def random_items_locations(new_board, board_indexes, items_on_board,num_board):
+def random_items_locations(new_board, board_indexes, items_on_board, num_board):
 
     floor = " "
-    road_rows = [14,15,16,17,18,19,20,21]
-    boss_rows = [35,36,37,38,39]
+    road_rows = [14, 15, 16, 17, 18, 19, 20, 21]
+    boss_rows = [35, 36, 37, 38, 39]
     road_width = 6
     boss_high = 5
 

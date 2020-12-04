@@ -3,6 +3,7 @@ import termcolor
 import hen_talk
 import creatures
 import inventory
+import display_information
 
 
 def character_position(character_icon, board):
@@ -290,10 +291,25 @@ def boss_movement(board, list_of_creatures):
             for col in range(movement):
                 board[first_row + row][first_col + col] = " "
                 board[first_row + row][last_col + (col + 1)] = boss.get("picture")
+                # if board[first_row + row][last_col + (col + 1)] == " ":
+                #     board[first_row + row][first_col + col] = " "
+                #     board[first_row + row][last_col + (col + 1)] = boss.get("picture") 
+                # else:
+                #     creatures.fight_boss()
+                #     display_information.print_end_game()
+                #     exit()
+                                              
     else:
         for row in range(boss.get("size")):
             for col in range(boss.get("size")):
                 board[first_row + row][first_col + col] = " "
+                # if board[first_row + row][first_col + col] == " ":
+                #     board[first_row + row][first_col + col] = " "
+                # else:
+                #     creatures.fight_boss()
+                #     display_information.print_end_game()
+                #     exit()
+                    
                 # board[lenght_board - (boss.get("size") + 1) + row][start_col_boss + col]
         creatures.put_boss_on_board(boss, board)
         

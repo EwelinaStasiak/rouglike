@@ -164,9 +164,9 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
 def levels_menagement(is_running=True):
 
     global board_1_dict, board_2_dict, board_3_dict
-    #list_of_boards = [board_2_dict]
+    list_of_boards = [board_2_dict]
     #list_of_boards = [board_3_dict]
-    list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
+    #list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
     is_alive = True
     level = 1
 
