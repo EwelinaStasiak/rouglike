@@ -10,8 +10,8 @@ def character_position(character_icon, board):
         for col in range(len(board[row])):
             if board[row][col] == character_icon: 
                 character_coordinate = [row, col]
-
-    return character_coordinate
+                return character_coordinate
+    
 
 
 def direction_of_movement(key, character_coordinate):
@@ -28,6 +28,7 @@ def direction_of_movement(key, character_coordinate):
         return (row, col + 1)
     else:
         return (row, col)
+
 
 def identify_obstacle(obstacle, obstacles_dict):
     for key, value in obstacles_dict.items():
@@ -245,13 +246,36 @@ def creature_movement(board, list_of_creatures):
         board, list_of_creatures = car_movement(board, list_of_creatures)
     elif first_creature["name"] == "Worm" or first_creature["name"] == "Dog":
         board, list_of_creatures = random_creature_move(board, list_of_creatures)
+    elif first_creature["name"] == "Fox":
+        board, list_of_creatures = boss_movement(board, list_of_creatures)
         
     
     return board, list_of_creatures
 
 
-def boss_movement():
-    pass
+def boss_movement(board, list_of_creatures):
+    global boss
+    boss = creatures.boss
+    boss_coordinate = character_position(boss.get("picture"), board)
+    first_row = boss_coordinate[0]
+    first_col = boss_coordinate[1]
+    last_col = first_col + (boss.get("size") - 1)
+    lenght_row_board = len(board[first_row])
+    movement = 2
+    if last_col + movement < lenght_row_board - 2:
+        for row in range(boss.get("size")):
+            for col in range(movement):
+                board[first_row + row][first_col + col] = " "
+                board[first_row + row][last_col + (col + 1)] = boss.get("picture")
+    else:
+        for row in range(boss.get("size")):
+            for col in range(boss.get("size")):
+                board[first_row + row][first_col + col] = " "
+                # board[lenght_board - (boss.get("size") + 1) + row][start_col_boss + col]
+        creatures.put_boss_on_board(boss, board)
+    return board, list_of_creatures
+
+    
 
 
 

@@ -81,7 +81,7 @@ def fill_the_bard():
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 2)
         elif board == board_3_dict:
             boss = creatures.create_boss()
-            new_board = creatures.put_boss_on_board(boss, board["board"])  #, new_list_of_creatures
+            new_board, new_list_of_creatures = creatures.put_boss_on_board(boss, board["board"])  #, new_list_of_creatures
             new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,num_board = 3)
         #new_board = inventory.random_items_locations(new_board,board["available_indices"],items_on_board,board)
         #Wstawianie itemów do zbierania
@@ -93,8 +93,6 @@ def screen_display(board):
     util.clear_screen()
     engine.display_board(board)
     creatures.print_player_info()
-    
-
 
 def inventory_management(board_dict):
     global board_3_dict

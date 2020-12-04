@@ -16,7 +16,7 @@ def create_creatures():
     lorry = {'name': "Lorry", 'kind': "Enemy", 'health': 20, "min_damage": 20, "max_damage": 50, "num_to_place": 5, 'pic': "L"} #128666}
     dog = {'name': "Dog", 'kind': "Enemy", 'health': 20, "min_damage": 1, "max_damage": 5, "num_to_place": 5, 'pic': "D"} #128021}
     hen = {'name': "Hen", 'kind': "Friend", 'health': 5, "num_to_place": 1, 'pic': "H"} #128020}
-    #boss = {'name': "Wyga", 'kind': "fox", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "num_to_place": 1, "picture": "F"}
+    # boss = {'name': "Fox", 'kind': "Enemy", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "num_to_place": 1, "picture": "F"}
 
     return worm, car, lorry, dog, hen, #boss
 
@@ -102,24 +102,24 @@ def enemy_pics():
 
 def create_boss():
     global boss
-    boss = {'name': "Wyga", 'species': "fox", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "picture": "F"}
+    boss = {'name': "Fox", 'species': "Enemy", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "picture": "F", "size": 5}
 
     return boss
 
 
 def put_boss_on_board(boss, board):
-    
-    boss_size = 5
+    list_of_creatures = [boss]
+    boss_size = boss.get("size")
     how_many_rows = len(board)
     how_many_cols = len(board[0])
     first_row = how_many_rows - 6
-    first_col = int(how_many_cols / 2) - 3
+    first_col = 1
     for row in range(boss_size):
         for col in range(boss_size):
             #board[first_row + row][first_col + col] = boss["picture"]
             board[first_row + row][first_col + col] = boss.get("picture")
 
-    return board
+    return board, list_of_creatures
 
 
 """
