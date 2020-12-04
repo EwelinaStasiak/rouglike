@@ -58,7 +58,9 @@ def non_road_coordinates(board_indices, road_rows):
 
 def car_placement(board, board_indices, list_of_vehiculs):
     vehiculs_to_place = len(list_of_vehiculs)
+    vehicul_types = ["Car", "Lorry"]
     road_rows = [15, 16, 17, 19, 20, 21]
+    empty = " "
     non_road_indices = non_road_coordinates(board_indices, road_rows)
     min_col = 1
     max_col = 78
@@ -66,12 +68,14 @@ def car_placement(board, board_indices, list_of_vehiculs):
     while vehiculs_to_place > 0:
         row_index = random.choice(road_rows)
         col_index = random.randint(min_col, max_col)
+        vehicul = list_of_vehiculs[vehiculs_to_place - 1]
 
         if board[row_index][col_index] == " " and board[row_index][col_index + 2] == " ":
             vehicul = list_of_vehiculs[vehiculs_to_place - 1]
             if vehicul["name"] == "Lorry":
                 board[row_index][col_index: col_index + 2] = [vehicul["pic"]] * 2
                 vehicul["location"] = (row_index, col_index)
+                vehicul["location_2"] = (row_index, col_index + 1)
             elif vehicul["name"] == "Car":
                 board[row_index][col_index] = vehicul["pic"]
                 vehicul["location"] = (row_index, col_index)
@@ -205,7 +209,7 @@ def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_
 
 def who_is_the_oponent(list_of_creatures, location):
     for creature in list_of_creatures:
-        if location == creature["location"]:
+        if location == creature["location"] or (creature["name"] == "Lorry" and location == creature["location_2"]):
             return list_of_creatures.index(creature)
         elif location == hero.get("location"):
             return False
