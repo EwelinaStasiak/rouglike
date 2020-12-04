@@ -3,6 +3,7 @@ import os
 
 
 def key_pressed():
+
     try:
         import tty
         import termios
@@ -28,6 +29,7 @@ def key_pressed():
 
 
 def clear_screen():
+    
     if os.name == "nt":
         os.system('cls')
     else:

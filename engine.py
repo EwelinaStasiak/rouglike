@@ -3,6 +3,7 @@ import termcolor
 
 
 def create_board(hight=41, width=81, space=" ", vert_boarder=" ", horis_boarder=" "):
+
     board = []
     first_last_row = [0, hight - 1]
 
@@ -23,6 +24,7 @@ Board_1
 
 
 def generate_chembers():
+
     chembers = []
     hight_and_width = {}
 
@@ -36,6 +38,7 @@ def generate_chembers():
 
 
 def random_chembers_indices(board_hight, board_width, first_row_col, hight_and_width):
+
     chemb_1_hight, chemb_1_width = hight_and_width[1]
     chemb_2_hight, chemb_2_width = hight_and_width[2]
     chemb_3_hight, chemb_3_width = hight_and_width[3]
@@ -58,6 +61,7 @@ def random_chembers_indices(board_hight, board_width, first_row_col, hight_and_w
 
 
 def placing_chembers():
+
     board_hight = 31
     board_width = 81
     first_row_col = 0
@@ -79,6 +83,7 @@ def placing_chembers():
 
 
 def gen_portals_dict(portals):
+
     portals_dict = {}
 
     for n in range(len(portals)//2):
@@ -89,7 +94,9 @@ def gen_portals_dict(portals):
 
 
 def placing_1st_chember(board, chember_1, row_1, available_coordinates, dimensions):
+
     row_for_portal = row_1
+
     for row_num in range(len(chember_1)):
         n = 0
         for el in chember_1[row_num]:
@@ -104,7 +111,9 @@ def placing_1st_chember(board, chember_1, row_1, available_coordinates, dimensio
 
 
 def placing_2nd_chember(board, chember_2, col_1, available_coordinates, dimensions):
+
     col_for_portal = col_1
+
     for row_num in range(len(chember_2)):
         n = 0
         r_col = col_1
@@ -120,8 +129,10 @@ def placing_2nd_chember(board, chember_2, col_1, available_coordinates, dimensio
 
 
 def placing_3rd_chember(board, chember_3, row_2, col_2, available_coordinates, dimensions):
+
     row_for_portal = row_2
     col_for_portal = col_2
+
     for row_num in range(len(chember_3)):
         col = col_2
         for el in chember_3[row_num]:
@@ -143,6 +154,7 @@ Board_2
 
 
 def sec_board(board):
+
     road_banch = [14, 22]
     road_strips = [" ", "–"]
 
@@ -150,6 +162,7 @@ def sec_board(board):
         board[index][1: 80] = ["–"] * 79
 
     midle_road_index = 1
+
     while midle_road_index < 77:
         for el in road_strips:
             board[18][midle_road_index: midle_road_index + 2] = [el] * 2
@@ -159,21 +172,22 @@ def sec_board(board):
 
 
 def car_placement(board):
+
     car = 20
 
     while car > 0:
         road_indices = [15, 16, 17, 19, 20, 21]
         row_index = random.choice(road_indices)
         col_index = random.randint(1, 78)
-
         if board[row_index][col_index] == " " and board[row_index][col_index + 2] == " ":
             board[row_index][col_index: col_index + 2] = ["C"] * 2
             car -= 1
- 
+
     return board
 
 
 def board_all_indices(board):
+
     board_indices = []
 
     for row_num in range(len(board)):
@@ -191,6 +205,7 @@ PRINT
 
 
 def display_board(board):
+
     for row in board:
         for el in row:
             print(el, end="")
@@ -205,7 +220,9 @@ PORTALS
 
 
 def mark_portals(board, portals, first_row, last_row, first_col, last_col,):
+
     portal_indices = []
+
     for portal in portals:
         rows_and_cols = {1: first_row, 2: last_row, 3: first_col, 4: last_col}
         key = random.randint(1, 4)
@@ -223,36 +240,43 @@ def mark_portals(board, portals, first_row, last_row, first_col, last_col,):
 
 
 def chember_1_portals(board, dimensions, rand_row):
+
     portals = [termcolor.colored("O", "yellow"), termcolor.colored("O", "green")]
     hight, width = dimensions
     first_row = rand_row
     last_row = rand_row + hight - 1
     first_col = 0
     last_col = width - 1
+
     return mark_portals(board, portals, first_row, last_row, first_col, last_col)
 
 
 def chember_2_portals(board, dimensions, rand_col):
+
     portals = [termcolor.colored("O", "blue"), termcolor.colored("O", "yellow")]
     hight, width = dimensions
     first_row = 0
     last_row = hight - 1
     first_col = rand_col
     last_col = rand_col + width - 1
+
     return mark_portals(board, portals, first_row, last_row, first_col, last_col)
 
 
 def chember_3_portals(board, dimensions, rand_row, rand_col):
+
     portals = [termcolor.colored("O", "green"), termcolor.colored("O", "blue")]
     hight, width = dimensions
     first_row = rand_row
     last_row = rand_row + hight - 1
     first_col = rand_col
     last_col = rand_col + width - 1
+
     return mark_portals(board, portals, first_row, last_row, first_col, last_col)
 
 
 def main():
+    
     board, available_coordinates = placing_chembers()
     display_board(board)
     print(len(available_coordinates))

@@ -3,14 +3,14 @@ import util
 
 def press_enter():
     input("Press Enter to continue...")
-    
+
 
 def choose_hero():
     print("""
     Choose your hero:
     1. Hedgehog Mikolaj 
     2. Magic hedgehog Mikolaj 
-    3. Invisible hedgehog Mikolaj
+    3. Invisible hedgehog Mikolaj \n
     """)
 
 
@@ -42,8 +42,10 @@ def print_end_game():
 
     ''')
 
+
 def name_game():
     print("""
+
      _____ _           ______          __          _      ___              _      
     |_   _| |          | ___ \        / _|        | |    / _ \            | |     
       | | | |__   ___  | |_/ /__ _ __| |_ ___  ___| |_  / /_\ \_ __  _ __ | | ___ 
@@ -78,20 +80,23 @@ def name_game():
                                 `"""""""' `""""""'                                                      
                                                           """)
 
-
     press_enter()
 
 
 def start_story():
     print("""
+
     The hedgehog Mikolaj decided to go in search of the perfect apple...
     He didn't know this trip would be so dangerous.
+
+
 
                          .|||||||||.          
                         |||||||||||||      Oh.. I must have the Perfect Apple!  
                         |||||||||||' .\      
-                        `||||||||||_,__o    """)
-
+                        `||||||||||_,__o    
+                   
+                        """)
 
     press_enter()
 
@@ -117,7 +122,7 @@ def first_board_rules():
     3. Collect useful items - apple (A), egg(E), cone (V).
     4. Remember to find the key.
     """)
-    
+
     press_enter()   
 
 
@@ -139,7 +144,7 @@ def third_board_rules():
     2. Collect useful items - apple (A), egg(E), cone (V).
     3. Use the cones to fight the fox.
     """)
-    
+
     press_enter()
 
 
@@ -151,3 +156,4 @@ def start_game():
     util.clear_screen()
     rules_game()
     util.clear_screen()
+    

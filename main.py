@@ -7,31 +7,32 @@ import display_information
 
 
 board_1_dict = {
-    "board" : [],
-    "available_indices" : [],
-    "portals_dict" : {},
-    "list_of_creatures" : [],
-    "list_of_items" : []
+    "board": [],
+    "available_indices": [],
+    "portals_dict": {},
+    "list_of_creatures": [],
+    "list_of_items": []
 }
 
 board_2_dict = {
-    "board" : [],
-    "available_indices" : [],
-    "portals_dict" : {},
-    "list_of_creatures" : [],
-    "list_of_items" : []
+    "board": [],
+    "available_indices": [],
+    "portals_dict": {},
+    "list_of_creatures": [],
+    "list_of_items": []
 }
 
 board_3_dict = {
-    "board" : [],
-    "available_indices" : [],
-    "portals_dict" : {},
-    "list_of_creatures" : [],
-    "list_of_items" : []
+    "board": [],
+    "available_indices": [],
+    "portals_dict": {},
+    "list_of_creatures": [],
+    "list_of_items": []
 } 
 
 
 def boards_generator():
+
     global board_1_dict, board_2_dict, board_3_dict
 
     board_1_dict["board"], board_1_dict["available_indices"], board_1_dict["portals_dict"] = engine.placing_chembers()
@@ -41,16 +42,18 @@ def boards_generator():
 
 
 def creatures_to_put_dict():
+
     animals = creatures.create_creatures()
     creatures_to_put = []
 
     for creature in animals:
         creatures_to_put += [(creatures.creatures_on_the_board_dicts(creature))]
-    
+
     return creatures_to_put
 
 
 def creatures_board_division():
+
     global board_1_dict, board_2_dict, board_3_dict
     creatures_to_put = creatures_to_put_dict()
 
@@ -65,6 +68,7 @@ def creatures_board_division():
 
 
 def fill_the_bard():
+
     global board_1_dict, board_2_dict, board_3_dict
     
     list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
@@ -90,16 +94,20 @@ def fill_the_bard():
 
 
 def screen_display(board):
+
     util.clear_screen()
     engine.display_board(board)
     creatures.print_player_info()
 
+
 def inventory_management(board_dict):
+
     global board_3_dict
 
     list_of_items = inventory.create_items()
     inventory.print_inventory()
     use_item = input("Do you want use item? \n Enter Y(yes) or N(no) \n")
+
     if use_item.upper() == "Y":
         item = inventory.choose_item_to_use()
         inventory.inventory_hero = inventory.remove_from_inventory([item])
@@ -116,6 +124,7 @@ def inventory_management(board_dict):
 
 
 def level_rules_managment(level):
+
     util.clear_screen()
     print(f"{level} level game.")
     if level == 1:
@@ -127,6 +136,7 @@ def level_rules_managment(level):
 
 
 def tour(board_dict, key, inventory=[], list_of_items=[]):
+
     #creatures_life(board_dict["list_of_creatures"])
     board, list_of_creatures = movement.player_move(board_dict["board"], key, board_dict["list_of_creatures"], inventory, list_of_items, board_dict["portals_dict"], board_dict["available_indices"])
     board, list_of_creatures = movement.creature_movement(board_dict["board"], board_dict["list_of_creatures"])
@@ -135,6 +145,7 @@ def tour(board_dict, key, inventory=[], list_of_items=[]):
 
 
 def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
+
     key = util.key_pressed()
 
     if key.lower() == 'q':
@@ -150,12 +161,14 @@ def key_management(board_dict, move_keys=["w", "s", "a", "d"]):
 
 
 def levels_menagement(is_running=True):
+
     global board_1_dict, board_2_dict, board_3_dict
     list_of_boards = [board_2_dict]
     #list_of_boards = [board_3_dict]
     #list_of_boards = [board_1_dict, board_2_dict, board_3_dict]
     is_alive = True
     level = 1
+
     for board_dict in list_of_boards:
         level_rules_managment(level)
         util.clear_screen()
@@ -170,6 +183,7 @@ def levels_menagement(is_running=True):
 
 
 def main():
+    
     display_information.start_game()
     boards_generator()
     creatures.hero = creatures.create_player()

@@ -2,7 +2,6 @@ import random
 import display_information
 
 
-
 """
 ************************************
             CREATURES
@@ -11,16 +10,18 @@ import display_information
 
 
 def create_creatures():
-    worm = {'name': "Worm", 'kind': "Enemy", 'health': 2, "min_damage": 1, "max_damage": 1, "num_to_place": 5, 'pic': "W"} #128027}
-    car = {'name': "Car", 'kind': "Enemy", 'health': 20, "min_damage": 5, "max_damage": 10, "num_to_place": 15, 'pic': "C"} #128663}
-    lorry = {'name': "Lorry", 'kind': "Enemy", 'health': 20, "min_damage": 20, "max_damage": 50, "num_to_place": 5, 'pic': "L"} #128666}
-    dog = {'name': "Dog", 'kind': "Enemy", 'health': 20, "min_damage": 1, "max_damage": 5, "num_to_place": 5, 'pic': "D"} #128021}
-    hen = {'name': "Hen", 'kind': "Friend", 'health': 5, "num_to_place": 1, 'pic': "H"} #128020}
-    # boss = {'name': "Fox", 'kind': "Enemy", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "num_to_place": 1, "picture": "F"}
 
-    return worm, car, lorry, dog, hen, #boss
+    worm = {'name': "Worm", 'kind': "Enemy", 'health': 2, "min_damage": 1, "max_damage": 1, "num_to_place": 5, 'pic': "W"}
+    car = {'name': "Car", 'kind': "Enemy", 'health': 20, "min_damage": 5, "max_damage": 10, "num_to_place": 15, 'pic': "C"}
+    lorry = {'name': "Lorry", 'kind': "Enemy", 'health': 20, "min_damage": 20, "max_damage": 50, "num_to_place": 5, 'pic': "L"}
+    dog = {'name': "Dog", 'kind': "Enemy", 'health': 20, "min_damage": 1, "max_damage": 5, "num_to_place": 5, 'pic': "D"}
+    hen = {'name': "Hen", 'kind': "Friend", 'health': 5, "num_to_place": 1, 'pic': "H"}
+    
+    return worm, car, lorry, dog, hen
+
 
 def creatures_on_the_board_dicts(creature):
+
     list_of_creatures = []
 
     for num in range(creature["num_to_place"]):
@@ -33,6 +34,7 @@ def creatures_on_the_board_dicts(creature):
 
 
 def random_creatures_locations(board, board_indexes, list_of_creatures):
+
     floor = " "
 
     for creature in list_of_creatures:
@@ -48,7 +50,9 @@ def random_creatures_locations(board, board_indexes, list_of_creatures):
 
 
 def non_road_coordinates(board_indices, road_rows):
+
     row = 0
+
     for indices in board_indices:
         if indices[row] in road_rows:
             board_indices.remove(indices)
@@ -57,10 +61,11 @@ def non_road_coordinates(board_indices, road_rows):
 
 
 def car_placement(board, board_indices, list_of_vehiculs):
+
     vehiculs_to_place = len(list_of_vehiculs)
-    vehicul_types = ["Car", "Lorry"]
+    # vehicul_types = ["Car", "Lorry"] wyświetlało że zmiena nie jest używana
     road_rows = [15, 16, 17, 19, 20, 21]
-    empty = " "
+    # empty = " "  wyświetlało że zmiena nie jest używana
     non_road_indices = non_road_coordinates(board_indices, road_rows)
     min_col = 1
     max_col = 78
@@ -105,6 +110,7 @@ def enemy_pics():
 
 
 def create_boss():
+
     global boss
     boss = {'name': "Fox", 'species': "Enemy", 'health': 20, "max_health": 20, "min_damage": 2, "max_damage": 7, "picture": "F", "size": 5}
 
@@ -112,15 +118,15 @@ def create_boss():
 
 
 def put_boss_on_board(boss, board):
+
     list_of_creatures = [boss]
     boss_size = boss.get("size")
     how_many_rows = len(board)
-    how_many_cols = len(board[0])
     first_row = how_many_rows - 6
     first_col = 1
+
     for row in range(boss_size):
         for col in range(boss_size):
-            #board[first_row + row][first_col + col] = boss["picture"]
             board[first_row + row][first_col + col] = boss.get("picture")
 
     return board, list_of_creatures
@@ -134,10 +140,12 @@ def put_boss_on_board(boss, board):
 
 
 def create_player():
+
     global hero
     'Tworzy bohatera wg wyboru użytkownika'
     display_information.choose_hero()
     invalid = True
+
     while invalid:
         user_choice = input()
         if user_choice == "1":
@@ -155,8 +163,10 @@ def create_player():
 
 
 def put_player_on_board(board):
+
     global hero
     player_icon = hero.get("picture")
+
     for row in range(len(board)):
         for col in range(len(board[row])):
             if board[row][col] == "#" and board[row + 1][col] == "#" and board[row][col + 1] == "#":
@@ -164,10 +174,11 @@ def put_player_on_board(board):
                 player_start_col = col + 2
                 board[player_start_row][player_start_col] = player_icon
 
-                return board
+    return board
 
 
 def is_it_alive():
+
     if hero["health"] <= 0:
         display_information.print_end_game()
         return False
@@ -175,6 +186,7 @@ def is_it_alive():
 
 
 def print_player_info():
+
     print(f"Player's name : {hero['name']}     Health level : {hero['health']}")
 
 
@@ -184,7 +196,9 @@ def print_player_info():
 ************************************
 """
 
+
 def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_position, row, col, player_icon, vehiculs_icon = ["C", "L"]):
+
     global hero
     above_road_boarder = 13
     current_row, current_col = current_possition
@@ -193,7 +207,7 @@ def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_
         board[current_row][current_col] = obstacles_dict["empty_space"]
         board[above_road_boarder][current_col] = hero["picture"]
         hero["location"] = (above_road_boarder, current_col)
-    
+
     return board
 
 # def car_accident(board, obstacle, current_possition, vehiculs_icon):
@@ -207,7 +221,9 @@ def car_crash(board, obstacle, current_possition, obstacles_dict): #board, next_
     
 #     return board
 
+
 def who_is_the_oponent(list_of_creatures, location):
+
     for creature in list_of_creatures:
         if location == creature["location"] or (creature["name"] == "Lorry" and location == creature["location_2"]):
             return list_of_creatures.index(creature)
@@ -216,6 +232,7 @@ def who_is_the_oponent(list_of_creatures, location):
 
 
 def carry_damage(attacker, opponent):
+
     damage = random.randint(attacker["min_damage"], attacker["max_damage"])
     opponent["health"] -= damage
 
@@ -226,11 +243,13 @@ def carry_damage(attacker, opponent):
 
 
 def did_it_hit():
+
     hit = [True, False]
     return random.choice(hit)
 
 
 def hit_the_opponent(attacker, opponent):
+
     if did_it_hit():
         opponent = carry_damage(attacker, opponent)
         if opponent:
@@ -243,6 +262,7 @@ def hit_the_opponent(attacker, opponent):
 
 
 def fight(board, attacker, list_of_creatures, location):
+
     global hero
     row, col = location
     creature_index = who_is_the_oponent(list_of_creatures, location)
@@ -265,10 +285,10 @@ def fight(board, attacker, list_of_creatures, location):
 
 
 def fight_boss(weapon=None):
+
     global hero
     global boss
-    #boss = main.board_3_dict["list_of_creatures"]
-    # boss = boss[0]
+    
     if weapon == None:
         hero["health"] = 0
         print("The fox ate you!")
@@ -287,7 +307,6 @@ def fight_boss(weapon=None):
                     hero["health"] -= boss["max_damage"]
                 elif hit_hero:
                     hero = carry_damage(boss, hero)
-    
 
     win = win_the_game(boss["health"])
     if win:
@@ -297,16 +316,19 @@ def fight_boss(weapon=None):
 
 
 def stone_throw():
+
     number = random.randint(1, 5)
     return (number % 3 == 0)
 
 
 def win_the_game(boss_health):
+
     if boss_health == 0 and hero.get("health") > 0:
         display_information.win_screen()
         return True
     else:
         return False
+
 
 #list_of_creatures = [{'name': 'Worm', 'health': 15, 'min_damage': 1, 'max_damage': 20, 'num_to_place': 5, 'pic': 'W', 'location': (2, 7)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 2)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (5, 5)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 5)}, {'name': 'Worm', 'health': 2, 'min_damage': 1, 'max_damage': 1, 'num_to_place': 5, 'pic': 'W', 'location': (3, 3)}]
 #location =(2, 7)

@@ -1,8 +1,9 @@
 import util
 import os
-import time
-from termcolor import colored
+# import time  wyświetliło że nieużywane
+# from termcolor import colored wyświetliło że nieużywane
 import engine
+
 
 sent_1 = "Greetings, mighty hedgehog!"
 sent_2 = "You've been on a long and dangerous\njourney to make your dream come true."
@@ -20,6 +21,7 @@ greetings = [sent_1, sent_2, sent_2_1, sent_3, sent_4]
 
 
 def hen_starts_talking(board, greetings):
+
     for sent in greetings:
         talking_window = engine.create_board(8, 81, " ", "#", "#")
         os.system("cls | clear")
@@ -30,6 +32,7 @@ def hen_starts_talking(board, greetings):
 
 
 def hen_gives_a_choice(board, make_your_choice, arrow):
+
     sent_5, sent_6, sent_7, sent_8 = make_your_choice
     up_down_keys = ["w", "s"]
     user_input = ""
@@ -67,6 +70,7 @@ def hen_gives_a_choice(board, make_your_choice, arrow):
 
 
 def dialog_window(talking_window, text):
+
     row = 2
     col = 3
 
@@ -84,13 +88,16 @@ def dialog_window(talking_window, text):
 
 
 def talking_to_hen(board):
+
     global greetings, make_your_choice, arrow
 
     hen_starts_talking(board, greetings)
+
     return hen_gives_a_choice(board, make_your_choice, arrow)
 
 
 def main():
+    
     global greetings, make_your_choice, arrow
     board = engine.create_board(41, 81, " ", "#", "#")
 
